@@ -28,7 +28,7 @@ class Game:
         self.scorelabel = Scorelabel(self)
         self.points = 0
         self.fps = 3
-
+        pygame.mixer.Channel(0).play(pygame.mixer.Sound('sound\intro.mp3'))     
         self.game_active = False
         self.fruit_visible = True
         
@@ -81,6 +81,8 @@ class Game:
     def check_points(self):
         if self.points % 6 == 0:
             self.fps += 0.5
+            pygame.mixer.Channel(4).play(pygame.mixer.Sound('sound\speedup.mp3'))
+
 
     def check_fruit(self):
         if self.game_active:
