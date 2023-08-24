@@ -14,7 +14,9 @@ class Game:
         """Initialize game attributes."""
         pygame.init()
         self.clock = pygame.time.Clock()   
-        self.screen = pygame.display.set_mode((800, 600))
+        self.screen_width = 800
+        self.screen_height = 600
+        self.screen = pygame.display.set_mode((self.screen_width, self.screen_height))
         self.screen_rect = self.screen.get_rect()
         pygame.display.set_caption("Testgame")
         
@@ -23,7 +25,7 @@ class Game:
         self.player_rect = pygame.Rect(self.player.x, self.player.y, self.player.width, self.player.height)
         self.fruit = Fruit(self, self.player)
 
-        self.game_active = False
+        self.game_active = True
         self.fruit_visible = True
         
     def run_game(self):      
@@ -32,8 +34,8 @@ class Game:
             self._check_events()
             if self.game_active:
                 self.player.update()
-                self.check_border()
-                self.player.check_body()
+                # self.player.check_border()
+                # self.player.check_body()
                 self.check_fruit()
             self._update_screen()  
             self.clock.tick(4)
@@ -66,15 +68,15 @@ class Game:
                 self.game_active = True
                 pygame.mouse.set_visible(False)
               
-    def check_border(self):
-        if self.player.x >= self.screen_rect.right - self.player.width:
-            self.hit()
-        if self.player.x <= self.screen_rect.left:
-            self.hit()
-        if self.player.y >= self.screen_rect.bottom - self.player.height:
-            self.hit()
-        if self.player.y <= self.screen_rect.top:
-            self.hit()
+    # def check_border(self):
+    #     if self.player.x >= self.screen_rect.right - self.player.width:
+    #         self.hit()
+    #     if self.player.x <= self.screen_rect.left:
+    #         self.hit()
+    #     if self.player.y >= self.screen_rect.bottom - self.player.height:
+    #         self.hit()
+    #     if self.player.y <= self.screen_rect.top:
+    #         self.hit()
 
     def hit(self):
         pygame.mixer.Channel(0).stop()

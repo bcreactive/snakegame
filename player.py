@@ -1,4 +1,5 @@
 import pygame
+import random
 
 
 class Player:
@@ -8,12 +9,16 @@ class Player:
     
         self.screen = game.screen
         self.screen_rect = game.screen.get_rect()
+        self.screen_width = self.screen_rect.width
+        self.screen_height = self.screen_rect.height
         self.game = game
         self.width = 40
         self.height = 40
-        self.x = 100
-        self.y = 100
-        self.direction = "s"
+        self.x = 380
+        self.y = 260
+        # choice = ["n", "s", "e", "w"]
+        # self.direction = random.choice(choice)
+        self.direction = "n"
         self.speed = 40
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
 
@@ -21,22 +26,39 @@ class Player:
         self.seg_rects = []
         self.seg_rects.append(self.rect)
 
-    def update(self):
-        if self.direction == "e" and (self.x + self.width) < self.screen_rect.right:
-            self.x += self.speed       
-        if self.direction == "w" and self.x > self.screen_rect.left:
+        self.wall_collision = False
+
+    def update(self):       
+        if self.direction == "e":
+            self.x += self.speed   
+        if self.direction == "w":
             self.x -= self.speed
-        if self.direction == "n" and self.y > self.screen_rect.top:
+        if self.direction == "n":
             self.y -= self.speed
-        if self.direction == "s" and (self.y + self.height) < self.screen_rect.bottom:
+        if self.direction == "s":
             self.y += self.speed
 
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
         self.update_seg_rects(self.rect)
 
+        self.wall_collision = self.check_border()
+        if self.wall_collision:
+            self.teleport_body()
+        self.check_body()
+        
         # print(self.seg_rects)
         # print(self.seg_amount)
-        
+
+    def check_border(self):
+        if self.x >= self.screen_rect.right - self.width:
+            return True
+        if self.x <= self.screen_rect.left:
+            return True
+        if self.y >= self.screen_rect.bottom - self.height:
+            return True
+        if self.y <= self.screen_rect.top:
+            return True
+
     def update_seg_rects(self, master):
         self.seg_rects.insert(0, master)
         self.seg_rects.pop()
@@ -49,9 +71,20 @@ class Player:
                     self.game.hit()
 
     def add_segment(self):
-        pass
         self.seg_rects.insert(0, self.rect)
         self.seg_amount += 1
+
+    def teleport_body(self):
+        for seg in self.seg_rects:
+            if self.x >= self.screen_width - self.width:
+                self.x -= self.screen_rect.width
+            if self.x <= self.screen_rect.left:
+                self.x += self.screen_rect.width
+            if self.y >= self.screen_rect.bottom - self.height:
+                self.y -= self.screen_rect.height
+            if self.y <= self.screen_rect.top:
+                self.y += self.screen_rect.height
+
 
     def drawme(self):
         l = len(self.seg_rects)
