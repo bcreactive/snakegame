@@ -39,8 +39,12 @@ class Fruit:
         else:
             self.get_new_fruit()
             return
+        
     
     def check_space(self, x, y):
         self.fruit_rect = f"<(rect({x}, {y}, 40, 40)>"
         if not self.fruit_rect in self.player.seg_rects:
             return True
+    
+    
+         

@@ -5,6 +5,7 @@ from time import sleep
 from button import Button
 from player import Player
 from fruit import Fruit
+from scorelabel import Scorelabel
 
 
 class Game:
@@ -24,6 +25,7 @@ class Game:
         self.player = Player(self)
         self.player_rect = pygame.Rect(self.player.x, self.player.y, self.player.width, self.player.height)
         self.fruit = Fruit(self, self.player)
+        self.scorelabel = Scorelabel(self)
 
         self.game_active = True
         self.fruit_visible = True
@@ -34,9 +36,10 @@ class Game:
             self._check_events()
             if self.game_active:
                 self.player.update()
-                # self.player.check_border()
-                # self.player.check_body()
+
+                self.scorelabel.prep_score()
                 self.check_fruit()
+                
             self._update_screen()  
             self.clock.tick(4)
 
@@ -67,16 +70,7 @@ class Game:
                 pygame.mixer.Channel(0).play(pygame.mixer.Sound('sound\playing.mp3'))
                 self.game_active = True
                 pygame.mouse.set_visible(False)
-              
-    # def check_border(self):
-    #     if self.player.x >= self.screen_rect.right - self.player.width:
-    #         self.hit()
-    #     if self.player.x <= self.screen_rect.left:
-    #         self.hit()
-    #     if self.player.y >= self.screen_rect.bottom - self.player.height:
-    #         self.hit()
-    #     if self.player.y <= self.screen_rect.top:
-    #         self.hit()
+
 
     def hit(self):
         pygame.mixer.Channel(0).stop()
@@ -104,6 +98,8 @@ class Game:
             self.player.drawme()
             if self.fruit_visible:
                 self.fruit.draw_fruit()
+            self.scorelabel.draw_score()
+            
         pygame.display.flip()
 
 pygame.quit()

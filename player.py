@@ -16,9 +16,8 @@ class Player:
         self.height = 40
         self.x = 380
         self.y = 260
-        # choice = ["n", "s", "e", "w"]
-        # self.direction = random.choice(choice)
-        self.direction = "n"
+        choice = ["n", "s", "e", "w"]
+        self.direction = random.choice(choice)
         self.speed = 40
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
 
@@ -46,9 +45,6 @@ class Player:
             self.teleport_body()
         self.check_body()
         
-        # print(self.seg_rects)
-        # print(self.seg_amount)
-
     def check_border(self):
         if self.x >= self.screen_rect.right - self.width:
             return True
@@ -84,7 +80,6 @@ class Player:
                 self.y -= self.screen_rect.height
             if self.y <= self.screen_rect.top:
                 self.y += self.screen_rect.height
-
 
     def drawme(self):
         l = len(self.seg_rects)
