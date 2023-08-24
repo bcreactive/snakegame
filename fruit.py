@@ -12,8 +12,8 @@ class Fruit:
         self.screen_rect = game.screen.get_rect()
         self.player = player
         
-        self.width = 40
-        self.height = 40
+        self.width = 39
+        self.height = 39
         self.x = self.get_rnd_x()
         self.y = self.get_rnd_y()
 
@@ -42,7 +42,7 @@ class Fruit:
         
     
     def check_space(self, x, y):
-        self.fruit_rect = f"<(rect({x}, {y}, 40, 40)>"
+        self.fruit_rect = f"<(rect({x}, {y}, 39, 39)>"
         if not self.fruit_rect in self.player.seg_rects:
             return True
     

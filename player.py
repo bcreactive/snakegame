@@ -12,15 +12,15 @@ class Player:
         self.screen_width = self.screen_rect.width
         self.screen_height = self.screen_rect.height
         self.game = game
-        self.width = 40
-        self.height = 40
-        self.x = 380
-        self.y = 260
+        self.width = 39
+        self.height = 39
+        self.x = 240
+        self.y = 200
         self.head_color = (110, 110, 210)
         self.body_color = (30, 250, 170)
         choice = ["n", "s", "e", "w"]
         self.direction = random.choice(choice)
-        self.speed = 40
+        self.speed = 39
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
 
         self.seg_amount = 1
@@ -38,13 +38,13 @@ class Player:
             self.y -= self.speed
         if self.direction == "s":
             self.y += self.speed
-
-        self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
-        self.update_seg_rects(self.rect)
-
         self.wall_collision = self.check_border()
         if self.wall_collision:
             self.teleport_body()
+        self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
+        self.update_seg_rects(self.rect)
+
+        
         self.check_body()
         
     def check_border(self):
