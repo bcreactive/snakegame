@@ -43,8 +43,6 @@ class Player:
             self.teleport_body()
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
         self.update_seg_rects(self.rect)
-
-        
         self.check_body()
         
     def check_border(self):
@@ -93,15 +91,10 @@ class Player:
 
     def drawme(self):
         l = len(self.seg_rects)
-        # for i in  range(l*(-1), -1):
-        #     self.player_img = pygame.draw.rect(self.screen, (100,100,100), (self.seg_rects[i]))
-        
         self.head = pygame.draw.rect(self.screen, (self.head_color), (self.seg_rects[0]))
         self.draw_eyes()  
         for i in  range(1, l-1):
             self.player_img = pygame.draw.rect(self.screen, (self.body_color), (self.seg_rects[i]))
-        # self.head = pygame.draw.rect(self.screen, (100,100,100), (self.seg_rects[0]))
-        # self.draw_eyes()
 
     def draw_eyes(self):
         if self.direction == "e":

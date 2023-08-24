@@ -1,12 +1,12 @@
 import pygame.font
 
+
 class Scorelabel:
     """This class gets the score and prepares the image to blit."""
 
     def __init__(self, game):
         """Initialize scorekeeping attributes."""
         self.game = game
-        
         self.screen = game.screen
         self.screen_rect = self.screen.get_rect()
         

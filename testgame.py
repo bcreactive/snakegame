@@ -43,7 +43,6 @@ class Game:
             self._update_screen()  
             self.clock.tick(self.fps)
             
-
     def _check_events(self):
         for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -81,7 +80,6 @@ class Game:
         sys.exit()
 
     def check_points(self):
-        # if not self.points == 0:
         if self.points % 6 == 0:
             self.fps += 0.5
 
@@ -105,10 +103,9 @@ class Game:
             self.player.drawme()
             if self.fruit_visible:
                 self.fruit.draw_fruit()
-            self.scorelabel.draw_score()
-            
+            self.scorelabel.draw_score()        
         pygame.display.flip()
-
+        
 pygame.quit()
 
 
