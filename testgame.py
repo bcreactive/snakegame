@@ -21,13 +21,15 @@ class Game:
         self.screen_rect = self.screen.get_rect()
         pygame.display.set_caption("Testgame")
         
-        self.play_button = Button(self, "Play!")
+        self.play_button = Button(self, "Snake!")
         self.player = Player(self)
         self.player_rect = pygame.Rect(self.player.x, self.player.y, self.player.width, self.player.height)
         self.fruit = Fruit(self, self.player)
         self.scorelabel = Scorelabel(self)
+        self.points = 0
+        self.fps = 3
 
-        self.game_active = True
+        self.game_active = False
         self.fruit_visible = True
         
     def run_game(self):      
@@ -36,12 +38,11 @@ class Game:
             self._check_events()
             if self.game_active:
                 self.player.update()
-
                 self.scorelabel.prep_score()
                 self.check_fruit()
-                
             self._update_screen()  
-            self.clock.tick(4)
+            self.clock.tick(self.fps)
+            
 
     def _check_events(self):
         for event in pygame.event.get():
@@ -71,7 +72,6 @@ class Game:
                 self.game_active = True
                 pygame.mouse.set_visible(False)
 
-
     def hit(self):
         pygame.mixer.Channel(0).stop()
         pygame.mixer.Channel(2).play(pygame.mixer.Sound('sound\end.mp3'))
@@ -79,6 +79,11 @@ class Game:
         pygame.mixer.Channel(3).play(pygame.mixer.Sound('sound\end_2.mp3'))
         sleep(1)
         sys.exit()
+
+    def check_points(self):
+        # if not self.points == 0:
+        if self.points % 6 == 0:
+            self.fps += 0.5
 
     def check_fruit(self):
         if self.game_active:
@@ -89,6 +94,8 @@ class Game:
                 self.fruit_visible = False
                 self.fruit.get_new_fruit()
                 self.player.add_segment()
+                self.points += 1
+                self.check_points()
 
     def _update_screen(self):
         self.screen.fill((0, 0, 0))
