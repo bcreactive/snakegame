@@ -34,7 +34,6 @@ class Game:
         
     def run_game(self):      
         while True:
-            
             self._check_events()
             if self.game_active:
                 self.player.update()
@@ -105,7 +104,7 @@ class Game:
                 self.fruit.draw_fruit()
             self.scorelabel.draw_score()        
         pygame.display.flip()
-        
+
 pygame.quit()
 
 
