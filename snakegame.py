@@ -28,12 +28,15 @@ class Game:
         self.scorelabel = Scorelabel(self)
         self.points = 0
         self.fps = 3
-        pygame.mixer.Channel(0).play(pygame.mixer.Sound('sound\intro.mp3'))     
+        pygame.mixer.Channel(0).play(pygame.mixer.Sound('sound\intro.mp3'))   
+        self.title_screen = pygame.image.load("title_screen.png")  
+        self.title_screen_rect = self.title_screen.get_rect()
         self.game_active = False
         self.fruit_visible = True
         
     def run_game(self):      
         while True:
+            
             self._check_events()
             if self.game_active:
                 self.player.update()
@@ -99,6 +102,7 @@ class Game:
     def _update_screen(self):
         self.screen.fill((0, 0, 0))
         if not self.game_active:      
+            self.screen.blit(self.title_screen, self.title_screen_rect)
             self.play_button.draw_button()
         if self.game_active:
             self.player.drawme()

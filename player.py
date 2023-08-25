@@ -69,7 +69,8 @@ class Player:
     def add_segment(self):
         self.seg_rects.insert(0, self.rect)
         self.seg_amount += 1
-        # self.body_color = self.get_color_tuple()
+        self.body_color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+        # self.head_color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
 
     def teleport_body(self):
         for seg in self.seg_rects:
@@ -82,17 +83,13 @@ class Player:
             if self.y <= self.screen_rect.top:
                 self.y += self.screen_rect.height
 
-    # def get_color_tuple(self):
-    #     self.r = random.randint(0,254)
-    #     self.g = random.randint(0,254)
-    #     self.b = random.randint(0,254)
-    #     color = f"{self.r}, {self.g}, {self.b}"
-    #     return color
-
     def drawme(self):
         l = len(self.seg_rects)
         self.head = pygame.draw.rect(self.screen, (self.head_color), (self.seg_rects[0]))
-        self.draw_eyes()  
+        self.draw_eyes() 
+         
+        # changes color for every frame
+        # self.body_color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
         for i in  range(1, l-1):
             self.player_img = pygame.draw.rect(self.screen, (self.body_color), (self.seg_rects[i]))
 

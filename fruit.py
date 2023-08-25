@@ -15,9 +15,10 @@ class Fruit:
         self.height = 39
         self.x = self.get_rnd_x()
         self.y = self.get_rnd_y()
+        self.fruit_color = (randint(0, 255), randint(0, 255), randint(0, 255))
 
     def draw_fruit(self):
-        self.fruit_img = pygame.draw.rect(self.screen, (230,135,20), (self.x, self.y, self.width, self.height))
+        self.fruit_img = pygame.draw.rect(self.screen, self.fruit_color, (self.x, self.y, self.width, self.height))
 
     def get_rnd_x(self):
             x = randint(10, self.screen_rect.right - 50)
