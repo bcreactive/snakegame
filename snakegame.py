@@ -6,6 +6,7 @@ from button import Button
 from player import Player
 from fruit import Fruit
 from scorelabel import Scorelabel
+from highscore import Highscore
 
 
 class Game:
@@ -26,6 +27,7 @@ class Game:
         self.player_rect = pygame.Rect(self.player.x, self.player.y, self.player.width, self.player.height)
         self.fruit = Fruit(self, self.player)
         self.scorelabel = Scorelabel(self)
+        self.highscore = Highscore(self)
         
         self.fps = 3
         pygame.mixer.Channel(0).play(pygame.mixer.Sound('sound\intro.mp3'))   
@@ -44,6 +46,7 @@ class Game:
                 self.player.update()
                 self.scorelabel.prep_score()
                 self.check_fruit()
+                # self.check_high_score()
             self._update_screen()  
             self.clock.tick(self.fps)
             
@@ -105,11 +108,20 @@ class Game:
                 self.player.add_segment()
                 self.points += 1
                 self.check_points()
-
+                
     def end_screen(self):
         self.screen.blit(self.score_screen, self.score_screen_rect)
+        self.check_high_score()
+        self.highscore.prep_high_score()
+        self.highscore.draw_highscore()
         self.play_button.draw_button()
         pygame.mouse.set_visible(True)
+
+    def check_high_score(self):
+        if self.points > 1:
+            if self.points * 100 > self.highscore.high_score:
+                self.highscore.high_score = self.points * 100
+                self.highscore.prep_high_score()
 
     def _update_screen(self):
         self.screen.fill((0, 0, 0))
