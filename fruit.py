@@ -15,10 +15,7 @@ class Fruit:
         self.height = 39
         self.x = self.get_rnd_x()
         self.y = self.get_rnd_y()
-        self.fruit_color = (randint(0, 255), randint(0, 255), randint(0, 255))
-
-    def draw_fruit(self):
-        self.fruit_img = pygame.draw.rect(self.screen, self.fruit_color, (self.x, self.y, self.width, self.height))
+        self.fruit_color = (randint(1, 255), randint(0, 255), randint(1, 255))
 
     def get_rnd_x(self):
             x = randint(10, self.screen_rect.right - 50)
@@ -29,6 +26,8 @@ class Fruit:
             return y
     
     def get_new_fruit(self):
+        self.fruit_color = (randint(1, 255), randint(0, 255), randint(1, 255))
+        # self.player.body_color = self.fruit_color
         self.x = self.get_rnd_x()
         self.y = self.get_rnd_y()
         place = self.check_space(self.x, self.y)
@@ -46,5 +45,6 @@ class Fruit:
             if not self.fruit_rect.colliderect(i):
                 return True
     
-    
+    def draw_fruit(self):
+        self.fruit_img = pygame.draw.rect(self.screen, self.fruit_color, (self.x, self.y, self.width, self.height))
          

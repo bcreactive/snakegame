@@ -69,7 +69,7 @@ class Player:
     def add_segment(self):
         self.seg_rects.insert(0, self.rect)
         self.seg_amount += 1
-        self.body_color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+        # self.body_color = (random.randint(1, 255), random.randint(0, 255), random.randint(0, 255))
         # self.head_color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
 
     def teleport_body(self):
@@ -82,10 +82,31 @@ class Player:
                 self.y -= self.screen_rect.height
             if self.y <= self.screen_rect.top:
                 self.y += self.screen_rect.height
+    
+    def reset_stats(self):
+        self.seg_amount = 1
+        self.game.fps = 3
+        self.game.points = 0
+        self.game.scorelabel.score = 0
+        self.get_new_snakehead()
+
+    def get_new_snakehead(self):
+        choice = ["n", "s", "e", "w"]
+        self.direction = random.choice(choice)
+        self.x = 240
+        self.y = 200
+        self.head_color = (110, 110, 210)
+        self.body_color = (30, 250, 170)
+        self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
+        self.seg_rects = []
+        self.seg_rects.append(self.rect)
 
     def drawme(self):
         l = len(self.seg_rects)
-        self.head = pygame.draw.rect(self.screen, (self.head_color), (self.seg_rects[0]))
+        if l == 1:
+            self.head = pygame.draw.rect(self.screen, (255, 255, 255), (self.seg_rects[0]), 2)
+        if l > 1:
+            self.head = pygame.draw.rect(self.screen, (self.head_color), (self.seg_rects[0]))
         self.draw_eyes() 
          
         # changes color for every frame

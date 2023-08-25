@@ -19,8 +19,14 @@ class Scorelabel:
         self.prep_score()
        
     def prep_score(self):
-        """Turn the score into a rendered image."""
-        self.score = (self.game.player.seg_amount -1) * 100
+        """Turn the score into a rendered image."""  
+        if self.game.points == 0:
+            self.score = 0
+        if self.game.points == 1:
+            self.score = 100
+        if not self.game.points == 0:   
+            self.score = (self.game.player.seg_amount -1) * 100
+        
         score_str = f"Score: {self.score}"
         self.score_image = self.font.render(score_str, True, self.text_color,
                                             self.label_color)
