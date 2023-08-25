@@ -11,14 +11,23 @@ class Button:
         self.screen_rect = self.screen.get_rect()
 
         # Set the dimensions and properties of the button.
-        self.width, self.height = 160, 80
-        self.button_color = (10, 235, 140)
+        if msg == "Snake!":
+            self.width, self.height = 160, 80
+            self.button_color = (96, 21, 95)
+        elif msg == "Snake again?":
+            self.width, self.height = 300, 80
+            self.button_color = (55, 23, 100)
         self.text_color = (255, 55, 255)
         self.font = pygame.font.SysFont(None, 60)
 
-        # Build the button's rect object and center it.
+        # Build the button's rect object and set position.
         self.rect = pygame.Rect(0, 0, self.width, self.height)
-        self.rect.center = (self.screen_rect.center)
+        if msg == "Snake!":
+            self.rect.center = (self.screen_rect.center)
+        elif msg == "Snake again?":
+            self.rect.x = 20
+            self.rect.y = 300
+        
 
         # The button message needs to be prepped only once.
         self._prep_msg(msg)

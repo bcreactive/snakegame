@@ -59,13 +59,13 @@ class Game:
                     self._check_play_button(mouse_pos)
                 if self.game_active:
                     if event.type == pygame.KEYDOWN:
-                        if event.key == pygame.K_UP:
+                        if event.key == pygame.K_UP and not self.player.direction == "s":
                             self.player.direction = "n"
-                        if event.key == pygame.K_DOWN:
+                        if event.key == pygame.K_DOWN and not self.player.direction == "n":
                             self.player.direction = "s"
-                        if event.key == pygame.K_LEFT:
+                        if event.key == pygame.K_LEFT and not self.player.direction == "e":
                             self.player.direction = "w"
-                        if event.key == pygame.K_RIGHT:
+                        if event.key == pygame.K_RIGHT and not self.player.direction == "w":
                             self.player.direction = "e"
                             
     def _check_play_button(self, mouse_pos):
@@ -114,6 +114,7 @@ class Game:
         self.check_high_score()
         self.highscore.prep_high_score()
         self.highscore.draw_highscore()
+        self.play_button = Button(self, "Snake again?")
         self.play_button.draw_button()
         pygame.mouse.set_visible(True)
 
