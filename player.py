@@ -12,6 +12,7 @@ class Player:
         self.screen_width = self.screen_rect.width
         self.screen_height = self.screen_rect.height
         self.game = game
+        # self.timer = game.timer
         self.width = 39
         self.height = 39
         self.x = 240
@@ -88,6 +89,10 @@ class Player:
         self.game.fps = 3
         self.game.points = 0
         self.game.scorelabel.score = 0
+        self.game.timer.stored_values = []
+        self.game.timer.temp_seconds = []
+        self.game.timer.temp_value = 0
+        self.game.timer.seconds = 0
         self.get_new_snakehead()
 
     def get_new_snakehead(self):

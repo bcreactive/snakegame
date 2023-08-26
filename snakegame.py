@@ -7,7 +7,7 @@ from player import Player
 from fruit import Fruit
 from scorelabel import Scorelabel
 from highscore import Highscore
-from timer import Timer
+from timer import Time
 
 class Game:
     """Main gameclass."""
@@ -31,6 +31,7 @@ class Game:
         self.fruit = Fruit(self, self.player)
         self.scorelabel = Scorelabel(self)
         self.highscore = Highscore(self)
+        self.timer = Time(self)
         
         pygame.mixer.Channel(0).play(pygame.mixer.Sound('sound\intro.mp3'))   
         self.title_screen = pygame.image.load("images/title_screen.png")  
@@ -51,6 +52,7 @@ class Game:
                 # self.check_high_score()
             self._update_screen()  
             self.clock.tick(self.fps)
+            self.timer.update_timer(self.fps)
             self.frames += 1
                     
     def _check_events(self):
@@ -81,6 +83,7 @@ class Game:
                 self.player.reset_stats()
                 self.game_active = True
                 pygame.mouse.set_visible(False)
+                self.timer.temp_value = 0
 
     def hit(self):
         pygame.mixer.Channel(0).stop()
@@ -90,6 +93,8 @@ class Game:
         sleep(0.2)
         self.game_active = False
         self.score_screen_visible = True
+        self.timer.get_time()
+        
 
     def check_points(self):
         if self.points % 6 == 0:
@@ -112,11 +117,13 @@ class Game:
                 self.points += 1
                 self.check_points()
                 
+                
     def end_screen(self):
         self.screen.blit(self.score_screen, self.score_screen_rect)
         self.check_high_score()
         self.highscore.prep_high_score()
         self.highscore.draw_highscore()
+        self.timer.draw_time()     
         self.play_button = Button(self, "Snake again?")
         self.play_button.draw_button()
         pygame.mouse.set_visible(True)
@@ -139,7 +146,8 @@ class Game:
             self.player.drawme()
             if self.fruit_visible:
                 self.fruit.draw_fruit()
-            self.scorelabel.draw_score()        
+            self.scorelabel.draw_score()   
+            
         pygame.display.flip()
 
 pygame.quit()
