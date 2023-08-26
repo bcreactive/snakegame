@@ -7,7 +7,7 @@ from player import Player
 from fruit import Fruit
 from scorelabel import Scorelabel
 from highscore import Highscore
-
+from timer import Timer
 
 class Game:
     """Main gameclass."""
@@ -16,12 +16,15 @@ class Game:
         """Initialize game attributes."""
         pygame.init()
         self.clock = pygame.time.Clock()   
+        self.fps = 3
         self.screen_width = 800
         self.screen_height = 600
         self.screen = pygame.display.set_mode((self.screen_width, self.screen_height))
         self.screen_rect = self.screen.get_rect()
-        pygame.display.set_caption("Testgame")
+        pygame.display.set_caption("Snakegame!")
+        
         self.points = 0
+        self.frames = 0
         self.play_button = Button(self, "Snake!")
         self.player = Player(self)
         self.player_rect = pygame.Rect(self.player.x, self.player.y, self.player.width, self.player.height)
@@ -29,7 +32,6 @@ class Game:
         self.scorelabel = Scorelabel(self)
         self.highscore = Highscore(self)
         
-        self.fps = 3
         pygame.mixer.Channel(0).play(pygame.mixer.Sound('sound\intro.mp3'))   
         self.title_screen = pygame.image.load("images/title_screen.png")  
         self.title_screen_rect = self.title_screen.get_rect()
@@ -49,7 +51,8 @@ class Game:
                 # self.check_high_score()
             self._update_screen()  
             self.clock.tick(self.fps)
-            
+            self.frames += 1
+                    
     def _check_events(self):
         for event in pygame.event.get():
                 if event.type == pygame.QUIT:
