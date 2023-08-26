@@ -12,7 +12,6 @@ class Player:
         self.screen_width = self.screen_rect.width
         self.screen_height = self.screen_rect.height
         self.game = game
-        # self.timer = game.timer
         self.width = 39
         self.height = 39
         self.x = 240
@@ -70,8 +69,6 @@ class Player:
     def add_segment(self):
         self.seg_rects.insert(0, self.rect)
         self.seg_amount += 1
-        # self.body_color = (random.randint(1, 255), random.randint(0, 255), random.randint(0, 255))
-        # self.head_color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
 
     def teleport_body(self):
         for seg in self.seg_rects:

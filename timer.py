@@ -59,8 +59,7 @@ class Time:
     def get_time_str(self, time):
         """Turn the runtime into a rendered image."""
 
-        amount = time
-        print(amount)
+        amount = round(time)
         if amount < 10:
             time_str = f"Time: 0{amount} sec"
             return time_str
@@ -69,7 +68,7 @@ class Time:
             return time_str
         if amount >= 60:
             minutes = amount / 60
-            minutes = round(min)
+            minutes = round(minutes)
             seconds = amount - (minutes * 60)
             seconds = round(seconds)
             if seconds < 10:

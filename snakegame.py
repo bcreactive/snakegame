@@ -95,7 +95,6 @@ class Game:
         self.score_screen_visible = True
         self.timer.get_time()
         
-
     def check_points(self):
         if self.points % 6 == 0:
             self.fps += 0.5
@@ -116,13 +115,13 @@ class Game:
                 self.player.add_segment()
                 self.points += 1
                 self.check_points()
-                
-                
+                         
     def end_screen(self):
         self.screen.blit(self.score_screen, self.score_screen_rect)
         self.check_high_score()
         self.highscore.prep_high_score()
         self.highscore.draw_highscore()
+        self.highscore.save_highscore()
         self.timer.draw_time()     
         self.play_button = Button(self, "Snake again?")
         self.play_button.draw_button()
