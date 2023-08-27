@@ -2,7 +2,7 @@ import pygame
 
 
 class Time:
-    """This class counts the frames and fps rate, to calculate runtime in seconds."""
+    """This class counts the frames and get fps rate, to calculate runtime in seconds."""
     def __init__(self, game):
         self.game = game
         self.screen = game.screen
@@ -11,8 +11,6 @@ class Time:
         self.temp_seconds = []
         self.temp_value = 0
         self.seconds = 0
-
-         # Font settings for scoring information
         self.text_color = (130, 230, 230)
         self.font = pygame.font.SysFont(None, 60)
         self.label_color = (30, 30, 30)

@@ -12,15 +12,15 @@ class Player:
         self.screen_width = self.screen_rect.width
         self.screen_height = self.screen_rect.height
         self.game = game
-        self.width = 39
-        self.height = 39
+        self.width = 40
+        self.height = 40
         self.x = 240
         self.y = 200
         self.head_color = (110, 110, 210)
         self.body_color = (30, 250, 170)
         choice = ["n", "s", "e", "w"]
         self.direction = random.choice(choice)
-        self.speed = 39
+        self.speed = 40
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
 
         self.seg_amount = 1
@@ -46,13 +46,13 @@ class Player:
         self.check_body()
         
     def check_border(self):
-        if self.x >= self.screen_rect.right - self.width:
+        if self.x > self.screen_rect.right - self.width:
             return True
-        if self.x <= self.screen_rect.left:
+        if self.x < self.screen_rect.left:
             return True
-        if self.y >= self.screen_rect.bottom - self.height:
+        if self.y > self.screen_rect.bottom - self.height:
             return True
-        if self.y <= self.screen_rect.top:
+        if self.y < self.screen_rect.top:
             return True
 
     def update_seg_rects(self, master):
@@ -72,25 +72,14 @@ class Player:
 
     def teleport_body(self):
         for seg in self.seg_rects:
-            if self.x >= self.screen_width - self.width:
+            if self.x > self.screen_width - self.width:
                 self.x -= self.screen_rect.width
-            if self.x <= self.screen_rect.left:
+            if self.x < self.screen_rect.left:
                 self.x += self.screen_rect.width
-            if self.y >= self.screen_rect.bottom - self.height:
+            if self.y > self.screen_rect.bottom - self.height:
                 self.y -= self.screen_rect.height
-            if self.y <= self.screen_rect.top:
+            if self.y < self.screen_rect.top:
                 self.y += self.screen_rect.height
-    
-    def reset_stats(self):
-        self.seg_amount = 1
-        self.game.fps = 3
-        self.game.points = 0
-        self.game.scorelabel.score = 0
-        self.game.timer.stored_values = []
-        self.game.timer.temp_seconds = []
-        self.game.timer.temp_value = 0
-        self.game.timer.seconds = 0
-        self.get_new_snakehead()
 
     def get_new_snakehead(self):
         choice = ["n", "s", "e", "w"]
@@ -102,6 +91,18 @@ class Player:
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
         self.seg_rects = []
         self.seg_rects.append(self.rect)
+
+    def reset_stats(self):
+        self.seg_amount = 1
+        self.game.fps = 3
+        self.game.points = 0
+        self.game.scorelabel.score = 0
+        self.game.timer.stored_values = []
+        self.game.timer.temp_seconds = []
+        self.game.timer.temp_value = 0
+        self.game.timer.seconds = 0
+        self.game.highscore.new_high_score = False
+        self.get_new_snakehead()
 
     def drawme(self):
         l = len(self.seg_rects)

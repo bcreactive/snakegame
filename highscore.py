@@ -4,10 +4,11 @@ import csv
 
 
 class Highscore:
-    """This class builds a list with the highscores."""
+    """This class builds an image with the highscore."""
 
     def __init__(self, game):
-        """Initialize scorekeeping attributes."""
+        """Initialize attributes."""
+
         self.game = game
         self.screen = game.screen
         self.screen_rect = self.screen.get_rect()
@@ -37,7 +38,7 @@ class Highscore:
         # check if there's a new high score        
         if self.game.points * 100 > self.high_score:
             self.high_score = self.score
-
+            
     def prep_high_score(self):
         """Turn the high score into a rendered image."""
         high_score = self.high_score
@@ -47,13 +48,33 @@ class Highscore:
         
         self.high_score_rect = self.high_score_image.get_rect()  
         self.high_score_rect.x = 20
-        self.high_score_rect.y = 450  
+        self.high_score_rect.y = 450
+        self.save_highscore()  
+        self.draw_highscore()
+    
+    def prep_grats(self):
+        """Shows a gratulation if new highscore was set."""
+        text_color = (130, 230, 250)
+        grats_str = f"!!!New Highscore!!!"
+        self.grats_image = self.font.render(grats_str, True,
+                                    text_color, self.label_color)
+        
+        self.grats_rect = self.grats_image.get_rect()  
+        self.grats_rect.x = 20
+        self.grats_rect.y = 500
+        self.draw_grats()
 
     def draw_highscore(self):
         """Draw highscore."""
         self.screen.blit(self.high_score_image, self.high_score_rect)
+    
+    def draw_grats(self):
+        """Draw gratulation"""
+        self.screen.blit(self.grats_image, self.grats_rect)
 
 
 
+        
+        
 
     

@@ -41,6 +41,7 @@ class Game:
         self.game_active = False
         self.fruit_visible = True
         self.score_screen_visible = False
+        self.new_high_score = False
         
     def run_game(self):      
         while True:
@@ -49,7 +50,6 @@ class Game:
                 self.player.update()
                 self.scorelabel.prep_score()
                 self.check_fruit()
-                # self.check_high_score()
             self._update_screen()  
             self.clock.tick(self.fps)
             self.timer.update_timer(self.fps)
@@ -84,6 +84,7 @@ class Game:
                 self.game_active = True
                 pygame.mouse.set_visible(False)
                 self.timer.temp_value = 0
+                self.new_high_score = False
 
     def hit(self):
         pygame.mixer.Channel(0).stop()
@@ -120,8 +121,6 @@ class Game:
         self.screen.blit(self.score_screen, self.score_screen_rect)
         self.check_high_score()
         self.highscore.prep_high_score()
-        self.highscore.draw_highscore()
-        self.highscore.save_highscore()
         self.timer.draw_time()     
         self.play_button = Button(self, "Snake again?")
         self.play_button.draw_button()
@@ -131,7 +130,11 @@ class Game:
         if self.points > 1:
             if self.points * 100 > self.highscore.high_score:
                 self.highscore.high_score = self.points * 100
-                self.highscore.prep_high_score()
+                self.new_high_score = True
+                
+            self.highscore.prep_high_score()
+            if self.new_high_score == True:
+                self.highscore.prep_grats()
 
     def _update_screen(self):
         self.screen.fill((0, 0, 0))

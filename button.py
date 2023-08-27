@@ -23,12 +23,13 @@ class Button:
         # Build the button's rect object and set position.
         self.rect = pygame.Rect(0, 0, self.width, self.height)
         if msg == "Snake!":
-            self.rect.center = (self.screen_rect.center)
+            self.rect.center = self.screen_rect.center
+            # self.rect.x = 250
+            # self.rect.y = 400
         elif msg == "Snake again?":
             self.rect.x = 20
             self.rect.y = 300
         
-
         # The button message needs to be prepped only once.
         self._prep_msg(msg)
 
