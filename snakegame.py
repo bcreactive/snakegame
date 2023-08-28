@@ -9,6 +9,7 @@ from scorelabel import Scorelabel
 from highscore import Highscore
 from timer import Time
 
+
 class Game:
     """Main gameclass."""
 
