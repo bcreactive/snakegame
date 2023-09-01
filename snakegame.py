@@ -59,8 +59,13 @@ class Game:
                 self.check_fruit()
                 self.bonus_fruit.check_bonus_fruit()
                 self.bonus_fruit.check_bonus_spawn()
+                if self.bonus_fruit_visible:
+                    self.bonus_fruit.ticks -= 1
+                    self.bonus_fruit.bonus_timer()
+                    self.bonus_fruit.bonus_click()
             self._update_screen()  
             self.clock.tick(self.fps/20)
+            
             # self.timer.update_timer(self.fps)
             self.frames += 1
                     
