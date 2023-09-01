@@ -31,7 +31,7 @@ class Game:
         self.play_button = Button(self, "Snake!")
         self.player = Player(self)
         self.player_rect = pygame.Rect(self.player.x, self.player.y, self.player.width, self.player.height)
-        self.fruit = Fruit(self, self.player)
+        self.fruit = Fruit(self)
         self.scorelabel = Scorelabel(self)
         self.highscore = Highscore(self)
         # self.timer = Time(self)

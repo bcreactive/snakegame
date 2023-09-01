@@ -5,13 +5,13 @@ from random import randint
 class Fruit:
     """This class generates the randomly spawned collectible."""
 
-    def __init__(self, game, player):
+    def __init__(self, game):
         """Initialize fruit attributes."""
         
         self.game = game
         self.screen = game.screen
         self.screen_rect = game.screen.get_rect()
-        self.player = game.player    
+        self.player = game.player
         self.width = 40
         self.height = 40
         self.x = self.get_rnd_x()
@@ -40,12 +40,12 @@ class Fruit:
             # self.player.body_color = self.fruit_color
             self.x = self.get_rnd_x()
             self.y = self.get_rnd_y()
-            place = self.check_space(self.x, self.y, self.player.seg_rects[:])
+            place = self.check_space(self.x, self.y, self.game.player.seg_rects[:])
 
-            while not place:
-                self.get_new_fruit()
-                if place: 
-                     break   
+            # while not place:
+            #     self.get_new_fruit()
+            #     if place: 
+            #          break   
             self.draw_fruit()
             self.game.fruit_visible = True
                 

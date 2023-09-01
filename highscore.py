@@ -19,7 +19,7 @@ class Highscore:
         # Font settings for scoring information
         self.text_color = (130, 230, 230)
         self.font = pygame.font.SysFont(None, 60)
-        self.label_color = (30, 30, 30)
+        self.label_color = (118, 66, 138)
 
     def get_saved_highscore(self):
         file_name = "save_file.csv"

@@ -35,6 +35,9 @@ class Button:
 
     def _prep_msg(self, msg):
         """Turn msg into a rendered image and center text on the button."""
+        # self.mouse_pos = pygame.mouse.get_pos()
+        # if self.rect.collidepoint(pygame.mouse.get_pos()):
+        #     self.button_color = (255, 223, 200)
         self.msg_image = self.font.render(msg, True, self.text_color,
                 self.button_color)
         self.msg_image_rect = self.msg_image.get_rect()
@@ -43,4 +46,5 @@ class Button:
     def draw_button(self):
         """Draw blank button and then draw massage."""
         self.screen.fill(self.button_color, self.rect)
+        self.border = pygame.draw.rect(self.screen, (255, 255, 255), (self.rect), 2)
         self.screen.blit(self.msg_image, self.msg_image_rect)
