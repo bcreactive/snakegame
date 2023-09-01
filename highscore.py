@@ -48,7 +48,7 @@ class Highscore:
         
         self.high_score_rect = self.high_score_image.get_rect()  
         self.high_score_rect.x = 20
-        self.high_score_rect.y = 400
+        self.high_score_rect.y = 450
         self.save_highscore()  
         self.draw_highscore()
     
@@ -61,7 +61,7 @@ class Highscore:
         
         self.grats_rect = self.grats_image.get_rect()  
         self.grats_rect.x = 20
-        self.grats_rect.y = 450
+        self.grats_rect.y = 500
         self.draw_grats()
 
     def draw_highscore(self):

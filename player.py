@@ -119,16 +119,24 @@ class Player:
 
     def draw_eyes(self):
         if self.direction == "e":
-            pygame.draw.circle(self.screen, (200,200,200), (self.x + 40, self.y + 10), 5)
-            pygame.draw.circle(self.screen, (200,200,200), (self.x + 40, self.y + 30), 5)
+            pygame.draw.circle(self.screen, (200,200,200), (self.x + 40, self.y + 10), 6)
+            pygame.draw.circle(self.screen, (200,200,200), (self.x + 40, self.y + 30), 6)
+            pygame.draw.circle(self.screen, (0, 0, 0), (self.x + 40, self.y + 10), 4)
+            pygame.draw.circle(self.screen, (0, 0, 0), (self.x + 40, self.y + 30), 4)
         if self.direction == "w":
-            pygame.draw.circle(self.screen, (200,200,200), (self.x , self.y + 10), 5)
-            pygame.draw.circle(self.screen, (200,200,200), (self.x , self.y + 30), 5)
+            pygame.draw.circle(self.screen, (200,200,200), (self.x , self.y + 10), 6)
+            pygame.draw.circle(self.screen, (200,200,200), (self.x , self.y + 30), 6)
+            pygame.draw.circle(self.screen, (0, 0, 0), (self.x , self.y + 10), 4)
+            pygame.draw.circle(self.screen, (0, 0, 0), (self.x , self.y + 30), 4)
         if self.direction == "n":
-            pygame.draw.circle(self.screen, (200,200,200), (self.x + 10, self.y ), 5)
-            pygame.draw.circle(self.screen, (200,200,200), (self.x + 30, self.y ), 5)
+            pygame.draw.circle(self.screen, (200,200,200), (self.x + 10, self.y ), 6)
+            pygame.draw.circle(self.screen, (200,200,200), (self.x + 30, self.y ), 6)
+            pygame.draw.circle(self.screen, (0, 0, 0), (self.x + 10, self.y ), 4)
+            pygame.draw.circle(self.screen, (0, 0, 0), (self.x + 30, self.y ), 4)
         if self.direction == "s":
-            pygame.draw.circle(self.screen, (200,200,200), (self.x + 10, self.y + 40), 5)
-            pygame.draw.circle(self.screen, (200,200,200), (self.x + 30, self.y + 40), 5)
+            pygame.draw.circle(self.screen, (200,200,200), (self.x + 10, self.y + 40), 6)
+            pygame.draw.circle(self.screen, (200,200,200), (self.x + 30, self.y + 40), 6)
+            pygame.draw.circle(self.screen, (0, 0, 0), (self.x + 10, self.y + 40), 4)
+            pygame.draw.circle(self.screen, (0, 0, 0), (self.x + 30, self.y + 40), 4)    
 
     

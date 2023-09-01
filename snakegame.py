@@ -172,12 +172,15 @@ class Game:
             self.play_button.draw_button()
             pygame.mouse.set_visible(True)
         if self.game_active:
-            self.player.drawme()
+            
+            # self.player.drawme()
             if self.fruit_visible:
                 self.fruit.draw_fruit()
             if self.bonus_fruit_visible:
                 self.bonus_fruit.draw_bonus_fruit()
-            self.scorelabel.draw_score()   
+            self.scorelabel.draw_score() 
+            self.player.drawme()
+            # self.scorelabel.draw_score()   
             
         pygame.display.flip()
 
