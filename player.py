@@ -96,7 +96,7 @@ class Player:
         self.seg_amount = 1
         self.game.fps = 60
         self.game.points = 0
-        self.game.scorelabel.score = 0
+        self.game.score = 0
         # self.game.timer.stored_values = []
         # self.game.timer.temp_seconds = []
         # self.game.timer.temp_value = 0

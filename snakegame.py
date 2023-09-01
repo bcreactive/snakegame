@@ -26,6 +26,7 @@ class Game:
         pygame.display.set_caption("Snakegame!")
         
         self.points = 0
+        self.score = 0
         self.frames = 0
         self.play_button = Button(self, "Snake!")
         self.player = Player(self)
@@ -46,13 +47,15 @@ class Game:
         # self.bonus_fruit_visible = True
         self.score_screen_visible = False
         self.new_high_score = False
+
+        self.scorelabel.prep_score(self.score)
         
     def run_game(self):      
         while True:
             self._check_events()
             if self.game_active:
                 self.player.update()
-                # self.scorelabel.prep_score()
+                self.scorelabel.prep_score(self.score)
                 self.check_fruit()
                 self.fruit.check_bonus_spawn()
             self._update_screen()  
@@ -115,7 +118,17 @@ class Game:
                     self.player.head_color = self.fruit.fruit_color
                 if self.points > 0:
                     self.player.body_color = self.fruit.fruit_color
-                self.scorelabel.prep_score()
+                if self.points < 12:
+                    self.score += 100
+                elif self.points >= 12 and self.points < 24:
+                    self.score += 200
+                elif self.points >= 24 and self.points < 36:
+                    self.score += 300
+                elif self.points >= 36 and self.points < 48:
+                    self.score += 400
+                elif self.points >= 48:
+                    self.score += 500
+
                 pygame.mixer.Channel(1).play(pygame.mixer.Sound('sound\pickup_1.mp3'))
                 self.fruit_visible = False
                 self.fruit.get_new_fruit()

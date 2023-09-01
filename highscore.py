@@ -12,7 +12,7 @@ class Highscore:
         self.game = game
         self.screen = game.screen
         self.screen_rect = self.screen.get_rect()
-        self.score = self.game.scorelabel.score
+        # self.score = self.game.scorelabel.score
         self.high_score = self.get_saved_highscore()
         self.high_score = int(self.high_score)
 

@@ -9,7 +9,7 @@ class Scorelabel:
         self.game = game
         self.screen = game.screen
         self.screen_rect = self.screen.get_rect()
-        self.score = 0
+        # self.score = 0
         
         # Font settings for scoring information
         self.label_color = (150, 135, 100)   
@@ -17,16 +17,15 @@ class Scorelabel:
         self.font = pygame.font.SysFont(None, 48)
 
         # Prepare the initial score image
-        self.prep_score()
+        # self.prep_score(self.score)
        
-    def prep_score(self):
+    def prep_score(self, score):
         """Turn the score into a rendered image."""  
-        if self.game.points == 0:
-            self.score = 0
-        if self.game.points == 1:
-            self.score = 100
-        if not self.game.points == 0:   
-            self.score = (self.game.player.seg_amount -1) * 100
+        self.score = score
+        # elif self.game.points == 1:
+        #     self.score = 100
+        # elif self.game.points > 1:   
+        #     self.score = (self.game.player.seg_amount -1) * 100
         
         score_str = f"Score: {self.score}"
         self.score_image = self.font.render(score_str, True, self.text_color,
