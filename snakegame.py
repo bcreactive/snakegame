@@ -147,8 +147,8 @@ class Game:
 
     def check_high_score(self):
         if self.points > 1:
-            if self.points * 100 > self.highscore.high_score:
-                self.highscore.high_score = self.points * 100
+            if self.score > self.highscore.high_score:
+                self.highscore.high_score = self.score
                 self.new_high_score = True
                 
             self.highscore.prep_high_score()
