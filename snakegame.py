@@ -7,7 +7,8 @@ from player import Player
 from fruit import Fruit
 from scorelabel import Scorelabel
 from highscore import Highscore
-from timer import Time
+# from timer import Time
+# from bonus_fruit import BonusFruit
 
 
 class Game:
@@ -32,8 +33,9 @@ class Game:
         self.fruit = Fruit(self, self.player)
         self.scorelabel = Scorelabel(self)
         self.highscore = Highscore(self)
-        self.timer = Time(self)
-        
+        # self.timer = Time(self)
+        # self.bonus_fruit = BonusFruit(self, self.player)
+
         pygame.mixer.Channel(0).play(pygame.mixer.Sound('sound\intro.mp3'))   
         self.title_screen = pygame.image.load("images/title_screen.png")  
         self.title_screen_rect = self.title_screen.get_rect()
@@ -41,6 +43,7 @@ class Game:
         self.score_screen_rect = self.score_screen.get_rect()
         self.game_active = False
         self.fruit_visible = True
+        # self.bonus_fruit_visible = True
         self.score_screen_visible = False
         self.new_high_score = False
         
@@ -51,9 +54,10 @@ class Game:
                 self.player.update()
                 self.scorelabel.prep_score()
                 self.check_fruit()
+                self.fruit.check_bonus_spawn()
             self._update_screen()  
             self.clock.tick(self.fps)
-            self.timer.update_timer(self.fps)
+            # self.timer.update_timer(self.fps)
             self.frames += 1
                     
     def _check_events(self):
@@ -84,7 +88,7 @@ class Game:
                 self.player.reset_stats()
                 self.game_active = True
                 pygame.mouse.set_visible(False)
-                self.timer.temp_value = 0
+                # self.timer.temp_value = 0
                 self.new_high_score = False
 
     def hit(self):
@@ -95,7 +99,7 @@ class Game:
         sleep(0.2)
         self.game_active = False
         self.score_screen_visible = True
-        self.timer.get_time()
+        # self.timer.get_time()
         
     def check_points(self):
         if self.points % 6 == 0:
@@ -122,7 +126,7 @@ class Game:
         self.screen.blit(self.score_screen, self.score_screen_rect)
         self.check_high_score()
         self.highscore.prep_high_score()
-        self.timer.draw_time()     
+        # self.timer.draw_time()     
         self.play_button = Button(self, "Snake again?")
         self.play_button.draw_button()
         pygame.mouse.set_visible(True)
@@ -160,3 +164,28 @@ if __name__ == "__main__":
     game = Game()
     game.run_game()
 
+
+    # def check_fruit(self):
+    #     if self.game_active:
+    #         self.fruit_rect = pygame.Rect(self.fruit.x, self.fruit.y, self.fruit.width, self.fruit.height)
+    #         self.player_rect = pygame.Rect(self.player.x, self.player.y, self.player.width, self.player.height)
+    #         if self.player_rect.colliderect(self.fruit_rect):
+    #             if self.points == 0:
+    #                 self.player.head_color = self.fruit.fruit_color
+    #             if self.points > 0:
+    #                 self.player.body_color = self.fruit.fruit_color
+    #             pygame.mixer.Channel(1).play(pygame.mixer.Sound('sound\pickup_1.mp3'))
+    #             self.fruit_visible = False
+    #             self.fruit.get_new_fruit()
+    #             self.player.add_segment()
+    #             self.points += 1
+    #             self.check_points()
+    #         if self.player_rect.colliderect(self.bonus_fruit.rect):
+    #             if self.points == 0:
+    #                 self.player.head_color = self.fruit.fruit_color
+    #             if self.points > 0:
+    #                 self.player.body_color = self.fruit.fruit_color
+    #             pygame.mixer.Channel(1).play(pygame.mixer.Sound('sound\pickup_1.mp3'))
+    #             self.fruit_visible = False
+    #             self.player.seg_rects.pop()
+    #             self.points += 3

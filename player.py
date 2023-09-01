@@ -97,10 +97,10 @@ class Player:
         self.game.fps = 3
         self.game.points = 0
         self.game.scorelabel.score = 0
-        self.game.timer.stored_values = []
-        self.game.timer.temp_seconds = []
-        self.game.timer.temp_value = 0
-        self.game.timer.seconds = 0
+        # self.game.timer.stored_values = []
+        # self.game.timer.temp_seconds = []
+        # self.game.timer.temp_value = 0
+        # self.game.timer.seconds = 0
         self.game.highscore.new_high_score = False
         self.get_new_snakehead()
 

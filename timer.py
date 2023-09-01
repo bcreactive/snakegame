@@ -30,7 +30,6 @@ class Time:
             value = self.temp_value / fps
             self.temp_seconds.append(value)
             self.prep_time(self.temp_seconds[0]) 
-             
         elif self.stored_values:
             for i in self.stored_values:
                 value = i / fps
@@ -40,6 +39,7 @@ class Time:
             sec = 0
             for i in self.temp_seconds:
                 sec = sec + i
+                
             self.prep_time(sec)
             
     def prep_time(self, time):
