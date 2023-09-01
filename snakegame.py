@@ -18,7 +18,7 @@ class Game:
         """Initialize game attributes."""
         pygame.init()
         self.clock = pygame.time.Clock()   
-        self.fps = 3
+        self.fps = 60
         self.screen_width = 800
         self.screen_height = 600
         self.screen = pygame.display.set_mode((self.screen_width, self.screen_height))
@@ -52,11 +52,11 @@ class Game:
             self._check_events()
             if self.game_active:
                 self.player.update()
-                self.scorelabel.prep_score()
+                # self.scorelabel.prep_score()
                 self.check_fruit()
                 self.fruit.check_bonus_spawn()
             self._update_screen()  
-            self.clock.tick(self.fps)
+            self.clock.tick(self.fps/20)
             # self.timer.update_timer(self.fps)
             self.frames += 1
                     
@@ -103,7 +103,7 @@ class Game:
         
     def check_points(self):
         if self.points % 6 == 0:
-            self.fps += 0.5
+            self.fps += 10
             pygame.mixer.Channel(4).play(pygame.mixer.Sound('sound\speedup.mp3'))
 
     def check_fruit(self):
@@ -115,6 +115,7 @@ class Game:
                     self.player.head_color = self.fruit.fruit_color
                 if self.points > 0:
                     self.player.body_color = self.fruit.fruit_color
+                self.scorelabel.prep_score()
                 pygame.mixer.Channel(1).play(pygame.mixer.Sound('sound\pickup_1.mp3'))
                 self.fruit_visible = False
                 self.fruit.get_new_fruit()

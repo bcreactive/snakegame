@@ -94,7 +94,7 @@ class Player:
 
     def reset_stats(self):
         self.seg_amount = 1
-        self.game.fps = 3
+        self.game.fps = 60
         self.game.points = 0
         self.game.scorelabel.score = 0
         # self.game.timer.stored_values = []
