@@ -11,7 +11,7 @@ class Fruit:
         self.game = game
         self.screen = game.screen
         self.screen_rect = game.screen.get_rect()
-        self.player = player    
+        self.player = game.player    
         self.width = 40
         self.height = 40
         self.x = self.get_rnd_x()
@@ -41,19 +41,23 @@ class Fruit:
             self.x = self.get_rnd_x()
             self.y = self.get_rnd_y()
             place = self.check_space(self.x, self.y, self.player.seg_rects[:])
-            if place:
-                self.draw_fruit()
-                self.game.fruit_visible = True
-                return
-            else:
+
+            while not place:
                 self.get_new_fruit()
-                return
+                if place: 
+                     break   
+            self.draw_fruit()
+            self.game.fruit_visible = True
+                
+            # else:
+            #     self.get_new_fruit()
+                # return
         if self.bonus_fruit:
             self.bonus_fruit = False
         
     def check_space(self, x, y, rects):
         self.rects = rects
-        self.fruit_rect = pygame.Rect(x, y, 39, 39)
+        self.fruit_rect = pygame.Rect(x, y, 40, 40)
         for i in self.rects:
             if not self.fruit_rect.colliderect(i):
                 return True

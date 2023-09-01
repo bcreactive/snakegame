@@ -36,8 +36,8 @@ class Highscore:
 
     def check_high_score(self):
         # check if there's a new high score        
-        if self.game.points * 100 > self.high_score:
-            self.high_score = self.score
+        if self.game.score > self.high_score:
+            self.high_score = self.game.score
             
     def prep_high_score(self):
         """Turn the high score into a rendered image."""
