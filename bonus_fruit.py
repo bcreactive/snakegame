@@ -6,7 +6,7 @@ from random import randint
 class BonusFruit(Fruit):
     """Class to build a bonus fruit."""
 
-    def __init__(self, game, player):
+    def __init__(self, game):
         self.game = game
         self.screen = game.screen
         self.screen_rect = game.screen.get_rect()
@@ -23,7 +23,7 @@ class BonusFruit(Fruit):
         if not self.game.bonus_fruit_visible:
             chance = 5
             rand_number = randint(1, 1000)
-            if rand_number <= chance and self.game.points >= 6:
+            if rand_number <= chance and self.game.points >= 2:
                 self.bonus_fruit = True
                 self.get_bonus_fruit()
                 

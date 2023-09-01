@@ -24,8 +24,6 @@ class Button:
         self.rect = pygame.Rect(0, 0, self.width, self.height)
         if msg == "Snake!":
             self.rect.center = self.screen_rect.center
-            # self.rect.x = 250
-            # self.rect.y = 400
         elif msg == "Snake again?":
             self.rect.x = 20
             self.rect.y = 300
@@ -35,9 +33,6 @@ class Button:
 
     def _prep_msg(self, msg):
         """Turn msg into a rendered image and center text on the button."""
-        # self.mouse_pos = pygame.mouse.get_pos()
-        # if self.rect.collidepoint(pygame.mouse.get_pos()):
-        #     self.button_color = (255, 223, 200)
         self.msg_image = self.font.render(msg, True, self.text_color,
                 self.button_color)
         self.msg_image_rect = self.msg_image.get_rect()

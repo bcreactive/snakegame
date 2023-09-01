@@ -7,8 +7,8 @@ from player import Player
 from fruit import Fruit
 from scorelabel import Scorelabel
 from highscore import Highscore
-# from timer import Time
 from bonus_fruit import BonusFruit
+# from timer import Time
 
 
 class Game:
@@ -28,20 +28,22 @@ class Game:
         self.points = 0
         self.score = 0
         self.frames = 0
+
         self.play_button = Button(self, "Snake!")
         self.player = Player(self)
         self.player_rect = pygame.Rect(self.player.x, self.player.y, self.player.width, self.player.height)
         self.fruit = Fruit(self)
         self.scorelabel = Scorelabel(self)
         self.highscore = Highscore(self)
+        self.bonus_fruit = BonusFruit(self)
         # self.timer = Time(self)
-        self.bonus_fruit = BonusFruit(self, self.player)
 
         pygame.mixer.Channel(0).play(pygame.mixer.Sound('sound\intro.mp3'))   
         self.title_screen = pygame.image.load("images/title_screen.png")  
         self.title_screen_rect = self.title_screen.get_rect()
         self.score_screen = pygame.image.load("images/score_screen.png")
         self.score_screen_rect = self.score_screen.get_rect()
+
         self.game_active = False
         self.fruit_visible = True
         self.bonus_fruit_visible = False
@@ -65,10 +67,9 @@ class Game:
                     self.bonus_fruit.bonus_click()
             self._update_screen()  
             self.clock.tick(self.fps/20)
-            
-            # self.timer.update_timer(self.fps)
             self.frames += 1
-                    
+            # self.timer.update_timer(self.fps)
+    
     def _check_events(self):
         for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -148,17 +149,16 @@ class Game:
         self.screen.blit(self.score_screen, self.score_screen_rect)
         self.check_high_score()
         self.highscore.prep_high_score()
-        # self.timer.draw_time()     
         self.play_button = Button(self, "Snake again?")
         self.play_button.draw_button()
         pygame.mouse.set_visible(True)
+        # self.timer.draw_time()     
 
     def check_high_score(self):
         if self.points > 1:
             if self.score > self.highscore.high_score:
                 self.highscore.high_score = self.score
-                self.new_high_score = True
-                
+                self.new_high_score = True               
             self.highscore.prep_high_score()
             if self.new_high_score == True:
                 self.highscore.prep_grats()
@@ -167,21 +167,20 @@ class Game:
         self.screen.fill((0, 0, 0))
         if not self.game_active and self.score_screen_visible:  
             self.end_screen()
+
         if not self.game_active and self.score_screen_visible == False:      
             self.screen.blit(self.title_screen, self.title_screen_rect)
             self.play_button.draw_button()
             pygame.mouse.set_visible(True)
+
         if self.game_active:
-            
-            # self.player.drawme()
+            self.scorelabel.draw_score() 
             if self.fruit_visible:
                 self.fruit.draw_fruit()
             if self.bonus_fruit_visible:
                 self.bonus_fruit.draw_bonus_fruit()
-            self.scorelabel.draw_score() 
-            self.player.drawme()
-            # self.scorelabel.draw_score()   
-            
+            self.player.drawme()   
+
         pygame.display.flip()
 
 pygame.quit()
