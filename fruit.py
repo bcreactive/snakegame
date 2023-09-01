@@ -27,12 +27,13 @@ class Fruit:
             y = randint(0, self.screen_rect.bottom - 40)
             return y
     
-    def check_bonus_spawn(self):
-        chance = 2
-        rand_number = randint(1, 1000)
-        if rand_number <= chance and self.game.points >= 6:
-            self.bonus_fruit = True
-            print("bonus!")
+    # def check_bonus_spawn(self):
+    #     chance = 2
+    #     rand_number = randint(1, 100)
+    #     if rand_number <= chance and self.game.points >= 1:
+    #         self.bonus_fruit = True
+    #         print("bonus!")
+    #         self.get_new_fruit()
 
     def get_new_fruit(self):
         if not self.bonus_fruit:
@@ -40,28 +41,43 @@ class Fruit:
             # self.player.body_color = self.fruit_color
             self.x = self.get_rnd_x()
             self.y = self.get_rnd_y()
+            self.width = 40
+            self.height = 40
             place = self.check_space(self.x, self.y, self.game.player.seg_rects[:])
-
-            # while not place:
-            #     self.get_new_fruit()
-            #     if place: 
-            #          break   
+            
+            while not place:
+                self.get_new_fruit()
+                if place: 
+                    break                 
             self.draw_fruit()
             self.game.fruit_visible = True
-                
-            # else:
-            #     self.get_new_fruit()
-                # return
-        if self.bonus_fruit:
-            self.bonus_fruit = False
-        
+
+        # if self.bonus_fruit:
+        #     self.fruit_color = (randint(1, 255), randint(0, 255), randint(1, 255))
+        #     self.x = self.get_rnd_x()
+        #     self.y = self.get_rnd_y()
+        #     self.width = 80
+        #     self.height = 80
+        #     place = self.check_space(self.x, self.y, self.game.player.seg_rects[:])
+
+        #     while not place:
+        #         self.get_new_fruit()
+        #         if place: 
+        #             break   
+
+        #     self.draw_fruit()
+        #     self.game.bonus_fruit_visible = True
+        #     self.bonus_fruit = False
+           
     def check_space(self, x, y, rects):
         self.rects = rects
-        self.fruit_rect = pygame.Rect(x, y, 40, 40)
+        self.fruit_rect = pygame.Rect(x, y, 50, 50)
         for i in self.rects:
             if not self.fruit_rect.colliderect(i):
                 return True
     
     def draw_fruit(self):
-        self.fruit_img = pygame.draw.rect(self.screen, self.fruit_color, (self.x, self.y, self.width, self.height))
-         
+        if not self.bonus_fruit:
+            pygame.draw.rect(self.screen, self.fruit_color, (self.x, self.y, self.width, self.height))
+        # if self.bonus_fruit:
+        #     self.fruit_img = pygame.draw.rect(self.screen, self.fruit_color, (self.x, self.y, self.width, self.height))
