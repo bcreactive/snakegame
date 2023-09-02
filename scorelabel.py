@@ -9,6 +9,7 @@ class Scorelabel:
         self.game = game
         self.screen = game.screen
         self.screen_rect = self.screen.get_rect()
+        self.score_rect = pygame.rect.Rect(0, 0, 0, 0)
         
         # Font settings for scoring information
         self.label_color = (0, 0, 0)   

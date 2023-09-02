@@ -12,8 +12,12 @@ class Fruit:
         self.screen = game.screen
         self.screen_rect = game.screen.get_rect()
         self.player = game.player
+        self.scorelabel = game.scorelabel
+        self.score_rect = self.scorelabel.score_rect
         self.width = 20
         self.height = 20
+        self.fruit_rect = pygame.rect.Rect(0, 0, 20, 20)
+        self.snake_rects = game.player.seg_rects
         self.x = self.get_rnd_x()
         self.y = self.get_rnd_y()
         self.fruit_color = (randint(1, 255), randint(1, 255), randint(1, 255))
@@ -30,26 +34,32 @@ class Fruit:
     def get_new_fruit(self):
         if not self.bonus_fruit:
             self.fruit_color = (randint(1, 255), randint(0, 255), randint(1, 255))
-            self.x = self.get_rnd_x()
-            self.y = self.get_rnd_y()
             self.width = 20
             self.height = 20
-            place = self.check_space(self.x, self.y, self.game.player.seg_rects[:])
-            
-            while not place:
+            self.x = self.get_rnd_x()
+            self.y = self.get_rnd_y()
+            place = self.check_space(self.fruit_rect, self.snake_rects) and self.check_scorelabel(self.score_rect, self.fruit_rect)
+            if not place:
                 self.get_new_fruit()
                 if place: 
-                    break                 
+                    return True
+
             self.draw_fruit()
             self.game.fruit_visible = True
 
-    def check_space(self, x, y, rects):
-        self.rects = rects
-        self.fruit_rect = pygame.Rect(x, y, 20, 20)
-        for i in self.rects:
-            if not self.fruit_rect.colliderect(i):
+    def check_scorelabel(self, labelrect, fruitrect):
+        self.labelrect = labelrect
+        self.fruitrect = fruitrect
+        if not self.fruitrect.colliderect(self.labelrect):
+            return True
+
+    def check_space(self, fruitrect, rects):
+        snake_rects = rects
+        fruit_rect = fruitrect
+        for rect in snake_rects:
+            if not fruit_rect.colliderect(rect):
                 return True
-    
+              
     def draw_fruit(self):
         if not self.bonus_fruit:
             pygame.draw.rect(self.screen, self.fruit_color, (self.x, self.y, self.width, self.height))

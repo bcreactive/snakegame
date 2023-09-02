@@ -32,9 +32,10 @@ class Game:
 
         self.play_button = Button(self, "Snake!")
         self.player = Player(self)
+        self.scorelabel = Scorelabel(self)
         self.player_rect = pygame.Rect(self.player.x, self.player.y, self.player.width, self.player.height)
         self.fruit = Fruit(self)
-        self.scorelabel = Scorelabel(self)
+        # self.scorelabel = Scorelabel(self)
         self.highscore = Highscore(self)
         self.bonus_fruit = BonusFruit(self)
         # self.timer = Time(self)
@@ -52,6 +53,7 @@ class Game:
         self.new_high_score = False
 
         self.scorelabel.prep_score(self.score)
+        self.key_buffer = []
         
     def run_game(self):      
         while True:
@@ -72,8 +74,10 @@ class Game:
             self.clock.tick(self.fps/20)
             self.frames += 1
             # self.timer.update_timer(self.fps)
-    
+            self.key_buffer = []
+
     def _check_events(self):
+        
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
@@ -83,15 +87,19 @@ class Game:
                 self._check_play_button(mouse_pos)
 
             if self.game_active:
-                if event.type == pygame.KEYDOWN:
+                if event.type == pygame.KEYDOWN and len(self.key_buffer) == 0:
                     if event.key == pygame.K_UP and not self.player.direction == "s":
                         self.player.direction = "n"
+                        self.key_buffer.append("n")
                     if event.key == pygame.K_DOWN and not self.player.direction == "n":
                         self.player.direction = "s"
+                        self.key_buffer.append("s")
                     if event.key == pygame.K_LEFT and not self.player.direction == "e":
                         self.player.direction = "w"
+                        self.key_buffer.append("w")
                     if event.key == pygame.K_RIGHT and not self.player.direction == "w":
                         self.player.direction = "e"
+                        self.key_buffer.append("e")
                             
     def _check_play_button(self, mouse_pos):
         """Start a new game if the player clicks Play."""
