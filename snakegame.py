@@ -19,6 +19,7 @@ class Game:
         pygame.init()
         self.clock = pygame.time.Clock()   
         self.fps = 60
+
         self.screen_width = 800
         self.screen_height = 600
         self.screen = pygame.display.set_mode((self.screen_width, self.screen_height))
@@ -61,10 +62,12 @@ class Game:
                 self.check_fruit()
                 self.bonus_fruit.check_bonus_fruit()
                 self.bonus_fruit.check_bonus_spawn()
+
                 if self.bonus_fruit_visible:
                     self.bonus_fruit.ticks -= 1
                     self.bonus_fruit.bonus_timer()
                     self.bonus_fruit.bonus_click()
+
             self._update_screen()  
             self.clock.tick(self.fps/20)
             self.frames += 1
@@ -72,21 +75,23 @@ class Game:
     
     def _check_events(self):
         for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    sys.exit()
-                if event.type == pygame.MOUSEBUTTONDOWN:
-                    mouse_pos = pygame.mouse.get_pos()
-                    self._check_play_button(mouse_pos)
-                if self.game_active:
-                    if event.type == pygame.KEYDOWN:
-                        if event.key == pygame.K_UP and not self.player.direction == "s":
-                            self.player.direction = "n"
-                        if event.key == pygame.K_DOWN and not self.player.direction == "n":
-                            self.player.direction = "s"
-                        if event.key == pygame.K_LEFT and not self.player.direction == "e":
-                            self.player.direction = "w"
-                        if event.key == pygame.K_RIGHT and not self.player.direction == "w":
-                            self.player.direction = "e"
+            if event.type == pygame.QUIT:
+                sys.exit()
+                
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                mouse_pos = pygame.mouse.get_pos()
+                self._check_play_button(mouse_pos)
+
+            if self.game_active:
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_UP and not self.player.direction == "s":
+                        self.player.direction = "n"
+                    if event.key == pygame.K_DOWN and not self.player.direction == "n":
+                        self.player.direction = "s"
+                    if event.key == pygame.K_LEFT and not self.player.direction == "e":
+                        self.player.direction = "w"
+                    if event.key == pygame.K_RIGHT and not self.player.direction == "w":
+                        self.player.direction = "e"
                             
     def _check_play_button(self, mouse_pos):
         """Start a new game if the player clicks Play."""
@@ -98,8 +103,8 @@ class Game:
                 self.player.reset_stats()
                 self.game_active = True
                 pygame.mouse.set_visible(False)
-                # self.timer.temp_value = 0
                 self.new_high_score = False
+                # self.timer.temp_value = 0
 
     def hit(self):
         pygame.mixer.Channel(0).stop()
@@ -120,6 +125,7 @@ class Game:
         if self.game_active:
             self.fruit_rect = pygame.Rect(self.fruit.x, self.fruit.y, self.fruit.width, self.fruit.height)
             self.player_rect = pygame.Rect(self.player.x, self.player.y, self.player.width, self.player.height)
+
             if self.player_rect.colliderect(self.fruit_rect):
                 self.get_points_value()         
                 pygame.mixer.Channel(1).play(pygame.mixer.Sound('sound\pickup_1.mp3'))
@@ -132,8 +138,10 @@ class Game:
     def get_points_value(self):
         if self.points == 0:
             self.player.head_color = self.fruit.fruit_color
+
         if self.points > 0:
             self.player.body_color = self.fruit.fruit_color
+
         if self.points < 12:
             self.score += 100
         elif self.points >= 12 and self.points < 24:
@@ -160,6 +168,7 @@ class Game:
                 self.highscore.high_score = self.score
                 self.new_high_score = True               
             self.highscore.prep_high_score()
+            
             if self.new_high_score == True:
                 self.highscore.prep_grats()
 
