@@ -16,7 +16,7 @@ class Fruit:
         self.score_rect = self.scorelabel.score_rect
         self.width = 20
         self.height = 20
-        self.fruit_rect = pygame.rect.Rect(0, 0, 20, 20)
+        self.fruit_rect = pygame.rect.Rect(0, 0, 21, 21)
         self.snake_rects = game.player.seg_rects
         self.x = self.get_rnd_x()
         self.y = self.get_rnd_y()
@@ -38,7 +38,8 @@ class Fruit:
             self.height = 20
             self.x = self.get_rnd_x()
             self.y = self.get_rnd_y()
-            place = self.check_space(self.fruit_rect, self.snake_rects) and self.check_scorelabel(self.score_rect, self.fruit_rect)
+            self.fruit_rect = pygame.rect.Rect(self.x, self.y, self.width, self.height)
+            place = self.check_space(self.fruit_rect) and self.check_scorelabel(self.fruit_rect)
             if not place:
                 self.get_new_fruit()
                 if place: 
@@ -47,16 +48,16 @@ class Fruit:
             self.draw_fruit()
             self.game.fruit_visible = True
 
-    def check_scorelabel(self, labelrect, fruitrect):
-        self.labelrect = labelrect
+    def check_scorelabel(self, fruitrect):
+        labelrect = self.scorelabel.score_rect
         self.fruitrect = fruitrect
-        if not self.fruitrect.colliderect(self.labelrect):
+        if not self.fruitrect.colliderect(labelrect):
             return True
 
-    def check_space(self, fruitrect, rects):
-        snake_rects = rects
+    def check_space(self, fruitrect):
+        self.snake_rects = self.game.player.seg_rects
         fruit_rect = fruitrect
-        for rect in snake_rects:
+        for rect in self.snake_rects:
             if not fruit_rect.colliderect(rect):
                 return True
               

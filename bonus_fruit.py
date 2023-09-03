@@ -13,8 +13,8 @@ class BonusFruit(Fruit):
         self.player = game.player   
         self.scorelabel = game.scorelabel
         self.score_rect = self.scorelabel.score_rect
-        self.width = 60
-        self.height = 60
+        self.width = 50
+        self.height = 50
         self.x = self.get_rnd_x()
         self.y = self.get_rnd_y()
         self.rect = pygame.rect.Rect(self.x, self.y, self.width, self.height)
@@ -24,9 +24,9 @@ class BonusFruit(Fruit):
         
     def check_bonus_spawn(self):
         if not self.game.bonus_fruit_visible:
-            chance = 5
+            chance = 500
             rand_number = randint(1, 1000)
-            if rand_number <= chance and self.game.points > 10:
+            if rand_number <= chance and self.game.points > 1:
                 self.bonus_fruit = True
                 self.get_bonus_fruit()
                 
@@ -42,15 +42,15 @@ class BonusFruit(Fruit):
         self.get_rnd_x()
         self.get_rnd_y()
         
-    def check_space(self, bonusrect, rects):
-        snake_rects = rects
+    def check_space(self, bonusrect):
+        self.snake_rects = self.game.player.seg_rects
         bonus_rect = bonusrect
-        for rect in snake_rects:
-            if bonus_rect.colliderect(rect):
-                continue
+        for rect in self.snake_rects:
+            if not bonus_rect.colliderect(rect):
+                return True
             
-    def check_scorelabel(self, labelrect, fruitrect):
-        self.labelrect = labelrect
+    def check_scorelabel(self, fruitrect):
+        self.labelrect = self.scorelabel.score_rect
         self.fruitrect = fruitrect
         if not self.fruitrect.colliderect(self.labelrect):
             return True
@@ -59,14 +59,15 @@ class BonusFruit(Fruit):
         self.bonus_fruit_color = (randint(1, 255), randint(0, 255), randint(1, 255))
         self.x = self.get_rnd_x()
         self.y = self.get_rnd_y()
-        self.width = 60
-        self.height = 60
-        place = self.check_space(self.rect, self.snake_rects) and self.check_scorelabel(self.score_rect, self.rect)
+        self.width = 50
+        self.height = 50
+        self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
+        place = self.check_space(self.rect) and self.check_scorelabel(self.rect)
         if not place:
             self.get_new_fruit()
             if place: 
-                return True  
-
+                return True 
+            
         self.draw_fruit()
         pygame.mixer.Channel(3).play(pygame.mixer.Sound('sound\pickup_bonus_2.mp3'))
         self.game.bonus_fruit_visible = True
@@ -74,10 +75,10 @@ class BonusFruit(Fruit):
 
     def check_bonus_fruit(self):
         if self.game.game_active:
-            self.bonus_fruit_rect = pygame.Rect(self.x, self.y, self.width, self.height)
+            self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
             self.player_rect = pygame.Rect(self.player.x, self.player.y, self.player.width, self.player.height)
 
-            if self.player_rect.colliderect(self.bonus_fruit_rect) and self.game.bonus_fruit_visible == True:
+            if self.player_rect.colliderect(self.rect) and self.game.bonus_fruit_visible == True:
                 self.game.bonus_fruit_visible = False    
                 pygame.mixer.Channel(1).play(pygame.mixer.Sound('sound\pickup_bonus.mp3'))  
 

@@ -8,6 +8,7 @@ class Scorelabel:
         """Initialize scorekeeping attributes."""
         self.game = game
         self.screen = game.screen
+
         self.screen_rect = self.screen.get_rect()
         self.score_rect = pygame.rect.Rect(0, 0, 0, 0)
         
@@ -15,6 +16,8 @@ class Scorelabel:
         self.label_color = (0, 0, 0)   
         self.text_color = (30, 230, 230)
         self.font = pygame.font.SysFont(None, 48)
+
+        self.prep_score(0)
        
     def prep_score(self, score):
         """Turn the score into a rendered image."""  
