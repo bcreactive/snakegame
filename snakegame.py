@@ -112,6 +112,7 @@ class Game:
                 self.game_active = True
                 pygame.mouse.set_visible(False)
                 self.new_high_score = False
+                self.bonus_fruit_visible = False
                 # self.timer.temp_value = 0
 
     def hit(self):
