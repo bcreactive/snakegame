@@ -49,13 +49,13 @@ class Fruit:
             self.game.fruit_visible = True
 
     def check_scorelabel(self, fruitrect):
-        labelrect = self.scorelabel.score_rect
+        labelrect = self.scorelabel.score_rect.copy()
         self.fruitrect = fruitrect
         if not self.fruitrect.colliderect(labelrect):
             return True
 
     def check_space(self, fruitrect):
-        self.snake_rects = self.game.player.seg_rects
+        self.snake_rects = self.game.player.seg_rects.copy()
         fruit_rect = fruitrect
         for rect in self.snake_rects:
             if not fruit_rect.colliderect(rect):

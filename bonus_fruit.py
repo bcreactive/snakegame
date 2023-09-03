@@ -43,14 +43,14 @@ class BonusFruit(Fruit):
         self.get_rnd_y()
         
     def check_space(self, bonusrect):
-        self.snake_rects = self.game.player.seg_rects
+        self.snake_rects = self.game.player.seg_rects.copy()
         bonus_rect = bonusrect
         for rect in self.snake_rects:
             if not bonus_rect.colliderect(rect):
                 return True
             
     def check_scorelabel(self, fruitrect):
-        self.labelrect = self.scorelabel.score_rect
+        self.labelrect = self.scorelabel.score_rect.copy()
         self.fruitrect = fruitrect
         if not self.fruitrect.colliderect(self.labelrect):
             return True
