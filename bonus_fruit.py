@@ -24,9 +24,9 @@ class BonusFruit(Fruit):
         
     def check_bonus_spawn(self):
         if not self.game.bonus_fruit_visible:
-            chance = 105
+            chance = 5
             rand_number = randint(1, 1000)
-            if rand_number <= chance and self.game.points >= 2:
+            if rand_number <= chance and self.game.points > 10:
                 self.bonus_fruit = True
                 self.get_bonus_fruit()
                 
@@ -42,20 +42,12 @@ class BonusFruit(Fruit):
         self.get_rnd_x()
         self.get_rnd_y()
         
-    # def check_fruit_place(self, x, y, rects):
-    #     self.rects = rects
-    #     self.fruit_rect = pygame.Rect(x, y, self.width, self.height)
-    #     for i in self.rects:
-    #         if not self.fruit_rect.colliderect(i):
-    #             return True
-    
     def check_space(self, bonusrect, rects):
         snake_rects = rects
         bonus_rect = bonusrect
         for rect in snake_rects:
             if bonus_rect.colliderect(rect):
                 continue
-
             
     def check_scorelabel(self, labelrect, fruitrect):
         self.labelrect = labelrect
