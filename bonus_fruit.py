@@ -24,9 +24,9 @@ class BonusFruit(Fruit):
         
     def check_bonus_spawn(self):
         if not self.game.bonus_fruit_visible:
-            chance = 500
+            chance = 8
             rand_number = randint(1, 1000)
-            if rand_number <= chance and self.game.points > 1:
+            if rand_number <= chance and self.game.points > 6:
                 self.bonus_fruit = True
                 self.get_bonus_fruit()
                 
