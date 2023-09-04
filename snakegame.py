@@ -8,7 +8,6 @@ from fruit import Fruit
 from scorelabel import Scorelabel
 from highscore import Highscore
 from bonus_fruit import BonusFruit
-# from timer import Time
 
 
 class Game:
@@ -19,26 +18,21 @@ class Game:
         pygame.init()
         self.clock = pygame.time.Clock()   
         self.fps = 60
-
         self.screen_width = 800
         self.screen_height = 600
         self.screen = pygame.display.set_mode((self.screen_width, self.screen_height))
         self.screen_rect = self.screen.get_rect()
-        pygame.display.set_caption("Snakegame!")
-        
+        pygame.display.set_caption("Snakegame!")      
         self.points = 0
         self.score = 0
-        self.frames = 0
 
         self.play_button = Button(self, "Snake!")
         self.player = Player(self)
         self.scorelabel = Scorelabel(self)
         self.player_rect = pygame.Rect(self.player.x, self.player.y, self.player.width, self.player.height)
         self.fruit = Fruit(self)
-        # self.scorelabel = Scorelabel(self)
         self.highscore = Highscore(self)
         self.bonus_fruit = BonusFruit(self)
-        # self.timer = Time(self)
 
         pygame.mixer.Channel(0).play(pygame.mixer.Sound('sound\intro.mp3'))   
         self.title_screen = pygame.image.load("images/title_screen.png")  
@@ -62,22 +56,12 @@ class Game:
                 self.player.update()
                 self.scorelabel.prep_score(self.score)
                 self.check_fruit()
-                self.bonus_fruit.check_bonus_fruit()
-                self.bonus_fruit.check_bonus_spawn()
-
-                if self.bonus_fruit_visible:
-                    self.bonus_fruit.ticks -= 1
-                    self.bonus_fruit.bonus_timer()
-                    self.bonus_fruit.bonus_click()
-
+                self.check_bonus_fruit()
             self._update_screen()  
             self.clock.tick(self.fps/20)
-            self.frames += 1
-            # self.timer.update_timer(self.fps)
             self.key_buffer = []
 
     def _check_events(self):
-        
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
@@ -113,7 +97,6 @@ class Game:
                 pygame.mouse.set_visible(False)
                 self.new_high_score = False
                 self.bonus_fruit_visible = False
-                # self.timer.temp_value = 0
 
     def hit(self):
         pygame.mixer.Channel(0).stop()
@@ -123,8 +106,15 @@ class Game:
         sleep(0.2)
         self.game_active = False
         self.score_screen_visible = True
-        # self.timer.get_time()
-        
+
+    def check_bonus_fruit(self):
+        self.bonus_fruit.check_bonus_fruit()
+        self.bonus_fruit.check_bonus_spawn()
+        if self.bonus_fruit_visible:
+            self.bonus_fruit.ticks -= 1
+            self.bonus_fruit.bonus_timer()
+            self.bonus_fruit.bonus_click()
+
     def check_points(self):
         if self.points % 6 == 0:
             self.fps += 10
@@ -169,7 +159,6 @@ class Game:
         self.play_button = Button(self, "Snake again?")
         self.play_button.draw_button()
         pygame.mouse.set_visible(True)
-        # self.timer.draw_time()     
 
     def check_high_score(self):
         if self.points > 1:

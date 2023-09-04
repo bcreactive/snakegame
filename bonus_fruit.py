@@ -3,7 +3,7 @@ from fruit import Fruit
 from random import randint
 
 
-class BonusFruit(Fruit):
+class BonusFruit:
     """Class to build a bonus fruit."""
 
     def __init__(self, game):
@@ -12,67 +12,55 @@ class BonusFruit(Fruit):
         self.screen_rect = game.screen.get_rect()
         self.player = game.player   
         self.scorelabel = game.scorelabel
-        self.score_rect = self.scorelabel.score_rect
         self.width = 50
         self.height = 50
-        self.x = self.get_rnd_x()
-        self.y = self.get_rnd_y()
-        self.rect = pygame.rect.Rect(self.x, self.y, self.width, self.height)
+        self.x = randint(0, self.screen_rect.right - 50)
+        self.y = randint(0, self.screen_rect.bottom - 50)
+        self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
+
         self.bonus_fruit_color = (randint(20, 255), randint(20, 255), randint(20, 255))
-        self.snake_rects = game.player.seg_rects
         self.ticks = 20
+        self.bonus_fruit = False
         
     def check_bonus_spawn(self):
         if not self.game.bonus_fruit_visible:
-            chance = 8
+            chance = 100
             rand_number = randint(1, 1000)
-            if rand_number <= chance and self.game.points > 6:
+            if rand_number <= chance and self.game.points > 1:
                 self.bonus_fruit = True
-                self.get_bonus_fruit()
-                
-    def get_rnd_x(self):
-            x = randint(0, self.screen_rect.right - self.width)
-            return x
-    
-    def get_rnd_y(self):
-            y = randint(0, self.screen_rect.bottom - self.height)
-            return y
-
-    def get_coord(self):
-        self.get_rnd_x()
-        self.get_rnd_y()
-        
-    def check_space(self, bonusrect):
-        self.snake_rects = self.game.player.seg_rects.copy()
-        bonus_rect = bonusrect
-        for rect in self.snake_rects:
-            if not bonus_rect.colliderect(rect):
-                return True
-            
-    def check_scorelabel(self, fruitrect):
-        self.labelrect = self.scorelabel.score_rect.copy()
-        self.fruitrect = fruitrect
-        if not self.fruitrect.colliderect(self.labelrect):
-            return True
+                self.get_bonus_fruit()              
             
     def get_bonus_fruit(self):
         self.bonus_fruit_color = (randint(1, 255), randint(0, 255), randint(1, 255))
-        self.x = self.get_rnd_x()
-        self.y = self.get_rnd_y()
-        self.width = 50
-        self.height = 50
+        self.x = randint(0, self.screen_rect.right - self.width)
+        self.y = randint(0, self.screen_rect.bottom - self.height)
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
-        place = self.check_space(self.rect) and self.check_scorelabel(self.rect)
-        if not place:
-            self.get_new_fruit()
-            if place: 
-                return True 
-            
-        self.draw_fruit()
-        pygame.mixer.Channel(3).play(pygame.mixer.Sound('sound\pickup_bonus_2.mp3'))
-        self.game.bonus_fruit_visible = True
-        self.bonus_fruit = False
+        
+        place = self.check_space() and self.check_scorelabel() and self.check_pickup()
+        if place:
+            self.draw_bonus_fruit()
+            pygame.mixer.Channel(3).play(pygame.mixer.Sound('sound\pickup_bonus_2.mp3'))
+            self.game.bonus_fruit_visible = True
+            self.bonus_fruit = False
+        else:
+            self.get_bonus_fruit()
 
+    def check_space(self):
+        l = len(self.game.player.seg_rects)
+        for i in range(0, l):               
+            if self.rect.colliderect(self.game.player.seg_rects[i]):
+                return False
+        return True
+        
+    def check_scorelabel(self):
+        labelrect = self.scorelabel.score_rect
+        if not self.rect.colliderect(labelrect):
+            return True
+    
+    def check_pickup(self):
+        if not self.rect.colliderect(self.game.fruit.fruit_rect):
+            return True
+   
     def check_bonus_fruit(self):
         if self.game.game_active:
             self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
