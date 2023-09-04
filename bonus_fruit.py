@@ -24,7 +24,7 @@ class BonusFruit:
         
     def check_bonus_spawn(self):
         if not self.game.bonus_fruit_visible:
-            chance = 15
+            chance = 14
             rand_number = randint(1, 1000)
             if rand_number <= chance and self.game.points > 6:
                 self.bonus_fruit = True
@@ -90,4 +90,5 @@ class BonusFruit:
                 pygame.mixer.Channel(4).play(pygame.mixer.Sound('sound\\bonus_timer.mp3'))
 
     def draw_bonus_fruit(self):
-        pygame.draw.rect(self.screen, self.bonus_fruit_color, (self.x, self.y, self.width, self.height))
+        pygame.draw.rect(self.screen, self.bonus_fruit_color, (self.rect))
+        pygame.draw.rect(self.screen, (255, 255, 255), (self.x + 35, self.y + 5, 12, 12))

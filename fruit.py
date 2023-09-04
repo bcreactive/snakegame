@@ -49,10 +49,10 @@ class Fruit:
     
     def check_bonus(self):
         if not self.fruit_rect.colliderect(self.game.bonus_fruit.rect):
-            print("did")
             return True
          
     def draw_fruit(self):
         if not self.bonus_fruit:
-            pygame.draw.rect(self.screen, self.fruit_color, (self.x, self.y, self.width, self.height))
+            pygame.draw.rect(self.screen, self.fruit_color, (self.fruit_rect))
+            pygame.draw.rect(self.screen, (255, 255, 255), (self.x + 14, self.y + 2, 4, 4))
        
