@@ -18,20 +18,20 @@ class BonusFruit:
         self.y = randint(0, self.screen_rect.bottom - 50)
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
 
-        self.bonus_fruit_color = (randint(20, 255), randint(20, 255), randint(20, 255))
+        self.bonus_fruit_color = (randint(40, 255), randint(40, 255), randint(40, 255))
         self.ticks = 20
         self.bonus_fruit = False
         
     def check_bonus_spawn(self):
         if not self.game.bonus_fruit_visible:
-            chance = 14
+            chance = 10
             rand_number = randint(1, 1000)
             if rand_number <= chance and self.game.points > 6:
                 self.bonus_fruit = True
                 self.get_bonus_fruit()              
             
     def get_bonus_fruit(self):
-        self.bonus_fruit_color = (randint(1, 255), randint(0, 255), randint(1, 255))
+        self.bonus_fruit_color = (randint(40, 255), randint(40, 255), randint(41, 255))
         self.x = randint(0, self.screen_rect.right - self.width)
         self.y = randint(0, self.screen_rect.bottom - self.height)
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
@@ -60,7 +60,13 @@ class BonusFruit:
     def check_pickup(self):
         if not self.rect.colliderect(self.game.fruit.fruit_rect):
             return True
-   
+        
+    def cut_segment(self):
+        chance = 25
+        number = randint(1, 100)
+        if number <= chance:
+            return True
+            
     def check_bonus_fruit(self):
         if self.game.game_active:
             self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
@@ -69,8 +75,8 @@ class BonusFruit:
             if self.player_rect.colliderect(self.rect) and self.game.bonus_fruit_visible == True:
                 self.game.bonus_fruit_visible = False    
                 pygame.mixer.Channel(1).play(pygame.mixer.Sound('sound\pickup_bonus.mp3'))  
-
-                if len(self.player.seg_rects) > 2:
+                self.cut = self.cut_segment()
+                if len(self.player.seg_rects) > 2 and self.cut:
                     self.player.seg_rects.pop()
                 self.game.score += 1000 
                 self.ticks = 20

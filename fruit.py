@@ -19,11 +19,11 @@ class Fruit:
         self.y = randint(0, self.screen_rect.bottom - 20)
         self.fruit_rect = pygame.Rect(self.x, self.y, self.width, self.height)
         
-        self.fruit_color = (randint(1, 255), randint(1, 255), randint(1, 255))
+        self.fruit_color = (randint(41, 255), randint(41, 255), randint(41, 255))
         self.bonus_fruit = False
 
     def get_new_fruit(self):
-        self.fruit_color = (randint(1, 255), randint(0, 255), randint(1, 255))
+        self.fruit_color = (randint(41, 255), randint(40, 255), randint(41, 255))
         self.x = randint(0, self.screen_rect.right - 20)
         self.y = randint(0, self.screen_rect.bottom - 20)
         self.fruit_rect = pygame.Rect(self.x, self.y, self.width, self.height)
