@@ -15,6 +15,7 @@ class Game:
 
     def __init__(self):
         """Initialize game attributes."""
+        
         pygame.init()
         self.clock = pygame.time.Clock()   
         self.fps = 60
@@ -26,7 +27,7 @@ class Game:
         self.points = 0
         self.score = 0
 
-        self.play_button = Button(self, "Snake!")
+        self.play_button = Button(self, "Play!")
         self.player = Player(self)
         self.scorelabel = Scorelabel(self)
         self.player_rect = pygame.Rect(self.player.x, self.player.y, self.player.width, self.player.height)
@@ -49,14 +50,15 @@ class Game:
         self.scorelabel.prep_score(self.score)
         self.key_buffer = []
         
-    def run_game(self):      
+    def run_game(self):  
+        #Main game loop.    
         while True:
             self._check_events()
             if self.game_active:
                 self.player.update()
                 self.scorelabel.prep_score(self.score)
                 self.check_fruit()
-                self.check_bonus_fruit()
+                self.bonus_fruit.check_bonus()
             self._update_screen()  
             self.clock.tick(self.fps/20)
             self.key_buffer = []
@@ -99,6 +101,7 @@ class Game:
                 self.bonus_fruit_visible = False
 
     def hit(self):
+        #Actions when the snake collides with itself.
         pygame.mixer.Channel(0).stop()
         pygame.mixer.Channel(2).play(pygame.mixer.Sound('sound\end.mp3'))
         sleep(0.2)
@@ -107,15 +110,8 @@ class Game:
         self.game_active = False
         self.score_screen_visible = True
 
-    def check_bonus_fruit(self):
-        self.bonus_fruit.check_bonus_fruit()
-        self.bonus_fruit.check_bonus_spawn()
-        if self.bonus_fruit_visible:
-            self.bonus_fruit.ticks -= 1
-            self.bonus_fruit.bonus_timer()
-            self.bonus_fruit.bonus_click()
-
     def check_points(self):
+        #Raise speed via fps, when a certain amount of pickups is collected.
         if self.points % 6 == 0:
             self.fps += 10
             pygame.mixer.Channel(4).play(pygame.mixer.Sound('sound\speedup.mp3'))
@@ -153,10 +149,11 @@ class Game:
             self.score += 500  
 
     def end_screen(self):
+        #Shows the endscreen with the highscore and the play-button.
         self.screen.blit(self.score_screen, self.score_screen_rect)
         self.check_high_score()
         self.highscore.prep_high_score()
-        self.play_button = Button(self, "Snake again?")
+        self.play_button = Button(self, "Play again?")
         self.play_button.draw_button()
         pygame.mouse.set_visible(True)
 

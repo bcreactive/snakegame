@@ -23,6 +23,7 @@ class Fruit:
         self.bonus_fruit = False
 
     def get_new_fruit(self):
+        #Build a pickup with random position.
         self.fruit_color = (randint(41, 255), randint(40, 255), randint(41, 255))
         self.x = randint(0, self.screen_rect.right - 20)
         self.y = randint(0, self.screen_rect.bottom - 20)
@@ -36,6 +37,7 @@ class Fruit:
             self.get_new_fruit()
 
     def check_space(self):
+        #Prevent pickup from spawning in the snake.
         l = len(self.game.player.seg_rects)
         for i in range(0, l):               
             if self.fruit_rect.colliderect(self.game.player.seg_rects[i]):
@@ -43,11 +45,13 @@ class Fruit:
         return True
 
     def check_scorelabel(self):
+        #Prevent pickup from spawning in the score area.
         labelrect = self.scorelabel.score_rect
         if not self.fruit_rect.colliderect(labelrect):
             return True
     
     def check_bonus(self):
+        #Prevent pickup from spawning in an existing bonus pickup.
         if not self.fruit_rect.colliderect(self.game.bonus_fruit.rect):
             return True
          

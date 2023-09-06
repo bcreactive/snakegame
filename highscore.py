@@ -15,7 +15,7 @@ class Highscore:
         self.high_score = self.get_saved_highscore()
         self.high_score = int(self.high_score)
 
-        # Font settings for scoring information
+        # Font settings
         self.text_color = (130, 230, 230)
         self.font = pygame.font.SysFont(None, 60)
         self.label_color = (118, 66, 138)
@@ -34,12 +34,11 @@ class Highscore:
             writer.writerow([self.high_score])
 
     def check_high_score(self):
-        # check if there's a new high score        
         if self.game.score > self.high_score:
             self.high_score = self.game.score
             
     def prep_high_score(self):
-        """Turn the high score into a rendered image."""
+        # Get a rendered high-score image.
         high_score = self.high_score
         high_score_str = f"Highscore: {high_score}"
         self.high_score_image = self.font.render(high_score_str, True,
@@ -52,7 +51,7 @@ class Highscore:
         self.draw_highscore()
     
     def prep_grats(self):
-        """Shows a gratulation if new highscore was set."""
+        # Shows a message, when a new high-score is achieved.
         text_color = (130, 230, 250)
         grats_str = f"!!!New Highscore!!!"
         self.grats_image = self.font.render(grats_str, True,
@@ -64,11 +63,9 @@ class Highscore:
         self.draw_grats()
 
     def draw_highscore(self):
-        """Draw highscore."""
         self.screen.blit(self.high_score_image, self.high_score_rect)
     
     def draw_grats(self):
-        """Draw gratulation"""
         self.screen.blit(self.grats_image, self.grats_rect)
 
 

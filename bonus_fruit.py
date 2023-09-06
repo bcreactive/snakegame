@@ -1,5 +1,4 @@
 import pygame
-from fruit import Fruit
 from random import randint
 
 
@@ -31,6 +30,7 @@ class BonusFruit:
                 self.get_bonus_fruit()              
             
     def get_bonus_fruit(self):
+        #Build a new fruit if one is collected.
         self.bonus_fruit_color = (randint(40, 255), randint(40, 255), randint(41, 255))
         self.x = randint(0, self.screen_rect.right - self.width)
         self.y = randint(0, self.screen_rect.bottom - self.height)
@@ -46,6 +46,7 @@ class BonusFruit:
             self.get_bonus_fruit()
 
     def check_space(self):
+        #Prevent pickup from spawning in the snake.
         l = len(self.game.player.seg_rects)
         for i in range(0, l):               
             if self.rect.colliderect(self.game.player.seg_rects[i]):
@@ -53,21 +54,25 @@ class BonusFruit:
         return True
         
     def check_scorelabel(self):
+        #Prevent pickup from spawning in the score area.
         labelrect = self.scorelabel.score_rect
         if not self.rect.colliderect(labelrect):
             return True
     
     def check_pickup(self):
+        #Prevent bonus pickup from spawning in an existing pickup.
         if not self.rect.colliderect(self.game.fruit.fruit_rect):
             return True
         
     def cut_segment(self):
-        chance = 25
+        #33 % chance to pop a segment when collected a bonus pickup.
+        chance = 33
         number = randint(1, 100)
         if number <= chance:
             return True
             
     def check_bonus_fruit(self):
+        #Checks, if the bonus pickup is collected.
         if self.game.game_active:
             self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
             self.player_rect = pygame.Rect(self.player.x, self.player.y, self.player.width, self.player.height)
@@ -82,7 +87,16 @@ class BonusFruit:
                 self.ticks = 20
                 return
             
+    def check_bonus(self):
+        self.check_bonus_fruit()
+        self.check_bonus_spawn()
+        if self.game.bonus_fruit_visible:
+            self.ticks -= 1
+            self.bonus_timer()
+            self.bonus_click()
+
     def bonus_timer(self):
+        #Bonus pickup disappears after 20 frames when not collected.
         if self.ticks == 0:
             self.game.bonus_fruit_visible = False
             self.ticks = 20

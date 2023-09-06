@@ -29,7 +29,8 @@ class Player:
 
         self.wall_collision = False
 
-    def update(self):       
+    def update(self):  
+        #Update the position of the player.     
         if self.direction == "e":
             self.x += self.speed   
         if self.direction == "w":
@@ -46,6 +47,7 @@ class Player:
         self.check_body()
         
     def check_border(self):
+        #Checks, if the player reaches the border of the screen.
         if self.x > self.screen_rect.right - self.width:
             return True
         if self.x < self.screen_rect.left:
@@ -60,6 +62,7 @@ class Player:
         self.seg_rects.pop()
 
     def check_body(self):
+        #Collision control for player.
         l = len(self.seg_rects)
         if l > 3:
             for i in range(1, l):               
@@ -71,6 +74,7 @@ class Player:
         self.seg_amount += 1
 
     def teleport_body(self):
+        #Moves the snake to opposite border of screen.
         for seg in self.seg_rects:
             if self.x > self.screen_width - self.width:
                 self.x -= self.screen_rect.width
@@ -82,6 +86,7 @@ class Player:
                 self.y += self.screen_rect.height
 
     def get_new_snakehead(self):
+        #Creates a new snakehead with random startdirection.
         choice = ["n", "s", "e", "w"]
         self.direction = random.choice(choice)
         self.x = 240
@@ -93,6 +98,7 @@ class Player:
         self.seg_rects.append(self.rect)
 
     def reset_stats(self):
+        #Resets the stats, when a new game begins.
         self.seg_amount = 1
         self.game.fps = 60
         self.game.points = 0
@@ -107,9 +113,6 @@ class Player:
         if l > 1:
             self.head = pygame.draw.rect(self.screen, (self.head_color), (self.seg_rects[0]))
         self.draw_eyes() 
-         
-        # changes color for every frame
-        # self.body_color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
         for i in  range(1, l-1):
             self.player_img = pygame.draw.rect(self.screen, (self.body_color), (self.seg_rects[i]))
 
