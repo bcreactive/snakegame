@@ -1,0 +1,15 @@
+description:
+
+use arrow-keys to control the snake!
+collect as many fruits as possible, without having the snake collide with itself.
+the snakes body grows by one segment for each collected fruit. 
+
+a level-up is reached, if a certain amount of fruits is collected:
+this will increase the speed and the collected fruits are worth more points.
+
+bonus-fruits will spawn at a small chance, and disappear after a short time.
+use shortcuts (wall-portation) to reach these, before the timer runs out! 
+bonus-fruits are worth 1000 pts and provide a chance, to cut off the snakes last tail-segment.
+
+try to get as many points as possible, to beat the current highscore!
+
